@@ -2,19 +2,21 @@ using UnityEngine;
 
 namespace LiarsBatting.Presentation
 {
-    // Same palette as the design doc's HTML mockup, so the in-editor build
-    // matches what was agreed on: strike = yellow, ball = green, out = red.
+    // Dark underground palette. Bg/Surface carry some transparency so the table
+    // background image shows through the panels. Strike/ball/out badges keep
+    // their light pastel fills (they read well on dark): strike = yellow,
+    // ball = green, out = red.
     public static class UITheme
     {
-        public static readonly Color Bg = Hex("FFFFFF");
-        public static readonly Color Surface = Hex("F2F4F7");
-        public static readonly Color Surface2 = Hex("E7EAF0");
-        public static readonly Color Border = Hex("D7DBE4");
-        public static readonly Color Ink = Hex("191C26");
-        public static readonly Color Muted = Hex("5B6072");
-        public static readonly Color Accent = Hex("1F3A5F");
-        public static readonly Color Clay = Hex("A6552B");
-        public static readonly Color ClaySoft = Hex("F3E2D5");
+        public static readonly Color Bg = Hex("0B0B0AB8");
+        public static readonly Color Surface = Hex("15130FC8");
+        public static readonly Color Surface2 = Hex("2A2620");
+        public static readonly Color Border = Hex("4A4236");
+        public static readonly Color Ink = Hex("E8DFC8");
+        public static readonly Color Muted = Hex("9A8F7A");
+        public static readonly Color Accent = Hex("3A7563");
+        public static readonly Color Clay = Hex("C46A3A");
+        public static readonly Color ClaySoft = Hex("3A2218");
 
         public static readonly Color StrikeBg = Hex("FCE38A");
         public static readonly Color StrikeFg = Hex("7A5B00");

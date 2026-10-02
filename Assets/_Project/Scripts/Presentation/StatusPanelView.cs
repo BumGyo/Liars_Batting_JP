@@ -15,39 +15,35 @@ namespace LiarsBatting.Presentation
         public readonly ScrollingHistoryColumn OpponentAttackHistory;
         public readonly ScrollingHistoryColumn MyAttackHistory;
 
-        private readonly Text[] _mySecretSlots = new Text[4];
+        private readonly Image[] _mySecretSlots = new Image[4];
 
         public StatusPanelView(Transform parent, MonoBehaviour host)
         {
-            Root = UiFactory.VerticalGroup(parent, "StatusPanel", spacing: 14,
-                padding: new RectOffset(18, 18, 18, 18));
+            Root = UiFactory.VerticalGroup(parent, "StatusPanel", spacing: 8,
+                padding: new RectOffset(14, 14, 10, 10));
             UiFactory.StretchToFillParent(Root);
 
             UiFactory.Text(Root, "내 비밀번호", 13, UITheme.Muted, TextAnchor.UpperLeft, FontStyle.Bold);
             var secretRow = UiFactory.HorizontalGroup(Root, "MySecretRow", spacing: 8);
-            UiFactory.SetHeight(secretRow, 48);
+            UiFactory.SetHeight(secretRow, 45);
             for (int i = 0; i < 4; i++)
             {
-                var slot = UiFactory.Panel(secretRow, $"MySecret{i}", UITheme.Accent);
-                UiFactory.SetSize(slot, 48, 48);
-                var txt = UiFactory.Text(slot, "", 20, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-                var trt = (RectTransform)txt.transform;
-                trt.anchorMin = Vector2.zero;
-                trt.anchorMax = Vector2.one;
-                trt.offsetMin = Vector2.zero;
-                trt.offsetMax = Vector2.zero;
-                _mySecretSlots[i] = txt;
+                var slot = UiFactory.Panel(secretRow, $"MySecret{i}", UITheme.Surface2);
+                UiFactory.SetSize(slot, 32, 45);
+                var img = slot.GetComponent<Image>();
+                img.preserveAspect = true;
+                _mySecretSlots[i] = img;
             }
 
             UiFactory.Text(Root, "공개현황", 13, UITheme.Muted, TextAnchor.UpperLeft, FontStyle.Bold);
             var revealRow = UiFactory.HorizontalGroup(Root, "RevealRow", spacing: 14);
 
-            var myRevealCol = UiFactory.VerticalGroup(revealRow, "MyRevealCol", spacing: 6);
+            var myRevealCol = UiFactory.VerticalGroup(revealRow, "MyRevealCol", spacing: 4);
             UiFactory.SetFlexible(myRevealCol, 1, 0);
             UiFactory.Text(myRevealCol, "내 비밀번호", 11, UITheme.Muted, TextAnchor.UpperLeft);
             MyRevealed = new RevealedDigitsRow(myRevealCol);
 
-            var opponentRevealCol = UiFactory.VerticalGroup(revealRow, "OpponentRevealCol", spacing: 6);
+            var opponentRevealCol = UiFactory.VerticalGroup(revealRow, "OpponentRevealCol", spacing: 4);
             UiFactory.SetFlexible(opponentRevealCol, 1, 0);
             UiFactory.Text(opponentRevealCol, "상대 비밀번호", 11, UITheme.Muted, TextAnchor.UpperLeft);
             OpponentRevealed = new RevealedDigitsRow(opponentRevealCol);
@@ -61,7 +57,10 @@ namespace LiarsBatting.Presentation
         public void ShowMySecret(int[] secret)
         {
             for (int i = 0; i < 4; i++)
-                _mySecretSlots[i].text = secret[i].ToString();
+            {
+                _mySecretSlots[i].sprite = CardArt.Digit(secret[i]);
+                _mySecretSlots[i].color = Color.white;
+            }
         }
     }
 }

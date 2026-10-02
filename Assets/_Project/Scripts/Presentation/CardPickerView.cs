@@ -20,7 +20,12 @@ namespace LiarsBatting.Presentation
         private readonly bool[] _digitDisabled = new bool[10]; // DemonHunter's 0~8 restriction
 
         private readonly RectTransform[] _slots = new RectTransform[4];
-        private readonly Text[] _slotTexts = new Text[4];
+        private readonly Image[] _slotImages = new Image[4];
+
+        // Card art is 5:7. Tints are multiplied over the white card sprite.
+        private const float CardW = 40f, CardH = 56f;
+        private static readonly Color TrayUsedTint = new Color(0.30f, 0.30f, 0.30f, 1f);
+        private static readonly Color TrayDisabledTint = new Color(0.20f, 0.20f, 0.20f, 1f);
         private readonly int[] _slotValues = { -1, -1, -1, -1 };
 
         private readonly Button _submitButton;
@@ -34,52 +39,42 @@ namespace LiarsBatting.Presentation
             UiFactory.Text(Root, title, 14, UITheme.Muted, TextAnchor.UpperLeft, FontStyle.Bold);
 
             var slotsRow = UiFactory.HorizontalGroup(Root, "Slots", spacing: 10, childAlign: TextAnchor.MiddleCenter);
-            UiFactory.SetHeight(slotsRow, 64);
+            UiFactory.SetHeight(slotsRow, CardH);
             for (int i = 0; i < 4; i++)
             {
                 int index = i;
                 var slotGo = new GameObject($"Slot{i}", typeof(RectTransform), typeof(Image), typeof(Button));
                 var slotRt = (RectTransform)slotGo.transform;
                 slotRt.SetParent(slotsRow, false);
-                UiFactory.SetSize(slotRt, 64, 64);
+                UiFactory.SetSize(slotRt, CardW, CardH);
                 var img = slotGo.GetComponent<Image>();
                 img.color = UITheme.Surface2;
+                img.preserveAspect = true;
                 var btn = slotGo.GetComponent<Button>();
                 btn.targetGraphic = img;
                 btn.onClick.AddListener(() => ClearSlot(index));
 
-                var text = UiFactory.Text(slotRt, "", 22, UITheme.Accent, TextAnchor.MiddleCenter, FontStyle.Bold);
-                var textRt = (RectTransform)text.transform;
-                textRt.anchorMin = Vector2.zero;
-                textRt.anchorMax = Vector2.one;
-                textRt.offsetMin = Vector2.zero;
-                textRt.offsetMax = Vector2.zero;
-
                 _slots[i] = slotRt;
-                _slotTexts[i] = text;
+                _slotImages[i] = img;
             }
 
             UiFactory.Text(Root, "카드를 클릭해 복사, 채워진 슬롯을 클릭해 삭제합니다.", 12, UITheme.Muted, TextAnchor.UpperLeft);
 
             var tray = UiFactory.Grid(Root, "Tray", columns: 5, cellSize: 56, spacing: 8);
-            UiFactory.SetHeight(tray, 56 * 2 + 8);
+            tray.GetComponent<GridLayoutGroup>().cellSize = new Vector2(CardW, CardH);
+            UiFactory.SetHeight(tray, CardH * 2 + 8);
             for (int digit = 0; digit < 10; digit++)
             {
                 int d = digit;
                 var cardGo = new GameObject($"Card{d}", typeof(RectTransform), typeof(Image), typeof(Button));
                 cardGo.transform.SetParent(tray, false);
                 var img = cardGo.GetComponent<Image>();
-                img.color = UITheme.Surface2;
+                img.sprite = CardArt.Digit(d);
+                img.color = Color.white;
+                img.preserveAspect = true;
                 var btn = cardGo.GetComponent<Button>();
                 btn.targetGraphic = img;
                 btn.onClick.AddListener(() => PlaceDigit(d));
-
-                var text = UiFactory.Text(cardGo.transform, d.ToString(), 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
-                var textRt = (RectTransform)text.transform;
-                textRt.anchorMin = Vector2.zero;
-                textRt.anchorMax = Vector2.one;
-                textRt.offsetMin = Vector2.zero;
-                textRt.offsetMax = Vector2.zero;
 
                 _trayButtons[d] = btn;
                 _trayImages[d] = img;
@@ -97,10 +92,10 @@ namespace LiarsBatting.Presentation
             if (emptyIndex < 0) return;
 
             _slotValues[emptyIndex] = digit;
-            _slotTexts[emptyIndex].text = digit.ToString();
-            _slots[emptyIndex].GetComponent<Image>().color = Color.Lerp(UITheme.Surface2, UITheme.Accent, 0.25f);
+            _slotImages[emptyIndex].sprite = CardArt.Digit(digit);
+            _slotImages[emptyIndex].color = Color.white;
             _used[digit] = true;
-            _trayImages[digit].color = UITheme.Border;
+            _trayImages[digit].color = TrayUsedTint;
             RefreshSubmitInteractable();
         }
 
@@ -110,10 +105,10 @@ namespace LiarsBatting.Presentation
             if (digit < 0) return;
 
             _slotValues[slotIndex] = -1;
-            _slotTexts[slotIndex].text = "";
-            _slots[slotIndex].GetComponent<Image>().color = UITheme.Surface2;
+            _slotImages[slotIndex].sprite = null;
+            _slotImages[slotIndex].color = UITheme.Surface2;
             _used[digit] = false;
-            _trayImages[digit].color = UITheme.Surface2;
+            _trayImages[digit].color = _digitDisabled[digit] ? TrayDisabledTint : Color.white;
             RefreshSubmitInteractable();
         }
 
@@ -153,7 +148,7 @@ namespace LiarsBatting.Presentation
         {
             _digitDisabled[digit] = !enabled;
             _trayButtons[digit].interactable = enabled && !_used[digit];
-            _trayImages[digit].color = enabled ? UITheme.Surface2 : UITheme.Border;
+            _trayImages[digit].color = enabled ? Color.white : TrayDisabledTint;
         }
     }
 }

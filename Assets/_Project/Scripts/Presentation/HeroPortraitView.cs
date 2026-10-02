@@ -55,7 +55,7 @@ namespace LiarsBatting.Presentation
             tooltipRt.pivot = new Vector2(0.5f, 0f);
             tooltipRt.anchoredPosition = new Vector2(0, 8);
             tooltipRt.sizeDelta = new Vector2(190, 64);
-            tooltipGo.GetComponent<Image>().color = UITheme.Ink;
+            tooltipGo.GetComponent<Image>().color = new Color(0.04f, 0.04f, 0.04f, 0.95f);
             _tooltip = tooltipGo;
 
             _tooltipText = UiFactory.Text(tooltipRt, "", 11, Color.white, TextAnchor.MiddleCenter);

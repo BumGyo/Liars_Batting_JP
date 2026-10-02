@@ -93,7 +93,10 @@ namespace LiarsBatting.Presentation
             var canvas = UiFactory.CreateCanvas();
             DontDestroyOnLoad(canvas.gameObject);
 
-            var root = UiFactory.FullScreen(canvas.transform, "Root", UITheme.Bg);
+            var root = UiFactory.FullScreen(canvas.transform, "Root", Color.white);
+            var rootImage = root.GetComponent<Image>();
+            rootImage.sprite = CardArt.Background();   // underground table background
+            rootImage.raycastTarget = false;
             _firestore = new FirestoreClient(this);
 
             BuildHeader(root);
@@ -772,6 +775,11 @@ namespace LiarsBatting.Presentation
                 padding: new RectOffset(0, 0, 6, 6), childAlign: TextAnchor.MiddleCenter);
             heroBar.gameObject.AddComponent<Image>().color = UITheme.Surface;
             UiFactory.SetHeight(heroBar, 96);
+            // The hero bar used to inherit flexibleHeight 1 from its children, so it split the
+            // spare screen height 50/50 with the body and squeezed the history logs. Give it a
+            // smaller share (0.3 vs the body's 1): raise it for a taller hero area, lower it
+            // (down to 0) for a taller body.
+            UiFactory.SetFlexible(heroBar, 1, 0.3f);
 
             var oppSide = UiFactory.HorizontalGroup(heroBar, "OppSide", spacing: 0, childAlign: TextAnchor.MiddleCenter);
             UiFactory.SetFlexible(oppSide, 1, 1);
