@@ -58,7 +58,7 @@ namespace LiarsBatting.Presentation
                 _slotImages[i] = img;
             }
 
-            UiFactory.Text(Root, "카드를 클릭해 복사, 채워진 슬롯을 클릭해 삭제합니다.", 12, UITheme.Muted, TextAnchor.UpperLeft);
+            UiFactory.Text(Root, "カードをクリックしてコピーし、埋まったスロットをクリックして削除します。", 12, UITheme.Muted, TextAnchor.UpperLeft);
 
             var tray = UiFactory.Grid(Root, "Tray", columns: 5, cellSize: 56, spacing: 8);
             tray.GetComponent<GridLayoutGroup>().cellSize = new Vector2(CardW, CardH);

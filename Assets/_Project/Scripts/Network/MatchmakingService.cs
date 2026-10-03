@@ -178,7 +178,7 @@ namespace LiarsBatting.Network
             {
                 if (targetDoc == null)
                 {
-                    onError("존재하지 않는 닉네임입니다.");
+                    onError("存在しないニックネームです。");
                     return;
                 }
 

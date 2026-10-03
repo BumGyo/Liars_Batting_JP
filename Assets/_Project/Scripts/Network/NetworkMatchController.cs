@@ -269,7 +269,7 @@ namespace LiarsBatting.Network
         // A field-masked patch (touching ONLY my own flag) means the two writes
         // genuinely can't stomp on each other regardless of timing, unlike a
         // normal WriteBaseDoc full-document replace -- a read-then-write here
-        // still has a race window if both players click "게임 시작" together.
+            // still has a race window if both players click "ゲーム開始" together.
         public void MarkMySecretReady()
         {
             string myField = MySide == MatchSide.A ? "secretASet" : "secretBSet";

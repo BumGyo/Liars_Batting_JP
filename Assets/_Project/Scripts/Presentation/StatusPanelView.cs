@@ -23,7 +23,7 @@ namespace LiarsBatting.Presentation
                 padding: new RectOffset(14, 14, 10, 10));
             UiFactory.StretchToFillParent(Root);
 
-            UiFactory.Text(Root, "내 비밀번호", 13, UITheme.Muted, TextAnchor.UpperLeft, FontStyle.Bold);
+            UiFactory.Text(Root, "自分のパスワード", 13, UITheme.Muted, TextAnchor.UpperLeft, FontStyle.Bold);
             var secretRow = UiFactory.HorizontalGroup(Root, "MySecretRow", spacing: 8);
             UiFactory.SetHeight(secretRow, 45);
             for (int i = 0; i < 4; i++)
@@ -35,23 +35,23 @@ namespace LiarsBatting.Presentation
                 _mySecretSlots[i] = img;
             }
 
-            UiFactory.Text(Root, "공개현황", 13, UITheme.Muted, TextAnchor.UpperLeft, FontStyle.Bold);
+            UiFactory.Text(Root, "公開状況", 13, UITheme.Muted, TextAnchor.UpperLeft, FontStyle.Bold);
             var revealRow = UiFactory.HorizontalGroup(Root, "RevealRow", spacing: 14);
 
             var myRevealCol = UiFactory.VerticalGroup(revealRow, "MyRevealCol", spacing: 4);
             UiFactory.SetFlexible(myRevealCol, 1, 0);
-            UiFactory.Text(myRevealCol, "내 비밀번호", 11, UITheme.Muted, TextAnchor.UpperLeft);
+            UiFactory.Text(myRevealCol, "自分のパスワード", 11, UITheme.Muted, TextAnchor.UpperLeft);
             MyRevealed = new RevealedDigitsRow(myRevealCol);
 
             var opponentRevealCol = UiFactory.VerticalGroup(revealRow, "OpponentRevealCol", spacing: 4);
             UiFactory.SetFlexible(opponentRevealCol, 1, 0);
-            UiFactory.Text(opponentRevealCol, "상대 비밀번호", 11, UITheme.Muted, TextAnchor.UpperLeft);
+            UiFactory.Text(opponentRevealCol, "相手のパスワード", 11, UITheme.Muted, TextAnchor.UpperLeft);
             OpponentRevealed = new RevealedDigitsRow(opponentRevealCol);
 
             var historyRow = UiFactory.HorizontalGroup(Root, "HistoryRow", spacing: 14);
             UiFactory.SetFlexible(historyRow, 1, 1);
-            OpponentAttackHistory = new ScrollingHistoryColumn(historyRow, "상대의 추측 기록 (내 판정)", host);
-            MyAttackHistory = new ScrollingHistoryColumn(historyRow, "나의 추측 기록 (상대 응답)", host);
+            OpponentAttackHistory = new ScrollingHistoryColumn(historyRow, "相手の推理履歴（自分の判定）", host);
+            MyAttackHistory = new ScrollingHistoryColumn(historyRow, "自分の推理履歴（相手の返答）", host);
         }
 
         public void ShowMySecret(int[] secret)

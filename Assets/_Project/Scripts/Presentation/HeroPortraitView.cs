@@ -91,7 +91,7 @@ namespace LiarsBatting.Presentation
 
         public void RefreshCharges(int remaining, int max)
         {
-            if (_showCharges) _chargesText.text = $"{remaining}/{max}회";
+            if (_showCharges) _chargesText.text = $"{remaining}/{max}回";
         }
 
         // Lets the ability icon itself act as the "use ability" button.

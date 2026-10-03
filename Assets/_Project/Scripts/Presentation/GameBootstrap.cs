@@ -133,7 +133,7 @@ namespace LiarsBatting.Presentation
             row.offsetMin = Vector2.zero;
             row.offsetMax = Vector2.zero;
 
-            _headerText = UiFactory.Text(row, "라이어스 배팅", 18, UITheme.Ink, TextAnchor.MiddleLeft, FontStyle.Bold);
+            _headerText = UiFactory.Text(row, "ライアーズ・バッティング", 18, UITheme.Ink, TextAnchor.MiddleLeft, FontStyle.Bold);
             UiFactory.SetFlexible(_headerText, 1, 0);
             _timer = new CountdownTimerView(row, this);
             _tokenText = UiFactory.Text(row, "", 13, UITheme.Muted, TextAnchor.MiddleRight);
@@ -163,25 +163,25 @@ namespace LiarsBatting.Presentation
             centered.offsetMin = Vector2.zero;
             centered.offsetMax = Vector2.zero;
 
-            UiFactory.Text(centered, "닉네임을 정해주세요", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
-            UiFactory.Text(centered, "한 번만 설정하면 다음부터는 바로 메뉴로 갑니다.", 13, UITheme.Muted, TextAnchor.MiddleCenter);
+            UiFactory.Text(centered, "ニックネームを決めてください", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
+            UiFactory.Text(centered, "一度設定すると、次回からはすぐメニューに進みます。", 13, UITheme.Muted, TextAnchor.MiddleCenter);
 
-            var input = UiFactory.InputField(centered, "예: 라이어짱");
+            var input = UiFactory.InputField(centered, "例：ライアーちゃん");
             var statusText = UiFactory.Text(centered, "", 12, UITheme.Clay, TextAnchor.MiddleCenter);
             statusText.gameObject.SetActive(false);
 
             Button confirmBtn = null;
-            confirmBtn = UiFactory.Button(centered, "확인", UITheme.Accent, Color.white, () =>
+            confirmBtn = UiFactory.Button(centered, "確認", UITheme.Accent, Color.white, () =>
             {
                 string name = input.text.Trim();
                 if (name.Length == 0)
                 {
-                    ShowNicknameStatus(statusText, "닉네임을 입력해주세요.", isError: true);
+                    ShowNicknameStatus(statusText, "ニックネームを入力してください。", isError: true);
                     return;
                 }
 
                 confirmBtn.interactable = false;
-                ShowNicknameStatus(statusText, "확인하는 중...", isError: false);
+                ShowNicknameStatus(statusText, "確認中...", isError: false);
 
                 _firestore.GetDocument($"players/{name}",
                     existing =>
@@ -189,7 +189,7 @@ namespace LiarsBatting.Presentation
                         if (existing != null)
                         {
                             confirmBtn.interactable = true;
-                            ShowNicknameStatus(statusText, "이미 사용 중인 닉네임입니다.", isError: true);
+                            ShowNicknameStatus(statusText, "そのニックネームはすでに使用されています。", isError: true);
                             return;
                         }
                         RegisterNickname(name, confirmBtn, statusText);
@@ -197,7 +197,7 @@ namespace LiarsBatting.Presentation
                     error =>
                     {
                         confirmBtn.interactable = true;
-                        ShowNicknameStatus(statusText, $"서버 연결에 실패했습니다: {error}", isError: true);
+                        ShowNicknameStatus(statusText, $"サーバーへの接続に失敗しました：{error}", isError: true);
                     });
             }, 15);
             UiFactory.SetHeight(confirmBtn, 44);
@@ -221,7 +221,7 @@ namespace LiarsBatting.Presentation
                 onError: error =>
                 {
                     confirmBtn.interactable = true;
-                    ShowNicknameStatus(statusText, $"등록에 실패했습니다: {error}", isError: true);
+                    ShowNicknameStatus(statusText, $"登録に失敗しました：{error}", isError: true);
                 });
         }
 
@@ -244,20 +244,20 @@ namespace LiarsBatting.Presentation
             centered.offsetMax = Vector2.zero;
 
             _menuGreetingText = UiFactory.Text(centered, "", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
-            UiFactory.Text(centered, "대전 방식을 선택하세요", 13, UITheme.Muted, TextAnchor.MiddleCenter);
+            UiFactory.Text(centered, "対戦方式を選択してください", 13, UITheme.Muted, TextAnchor.MiddleCenter);
 
-            var aiBtn = UiFactory.Button(centered, "AI 매칭", UITheme.Accent, Color.white, StartAiMatch, 16);
+            var aiBtn = UiFactory.Button(centered, "AI対戦", UITheme.Accent, Color.white, StartAiMatch, 16);
             UiFactory.SetHeight(aiBtn, 52);
 
-            var randomBtn = UiFactory.Button(centered, "랜덤 매칭", UITheme.Surface2, UITheme.Ink,
+            var randomBtn = UiFactory.Button(centered, "ランダム対戦", UITheme.Surface2, UITheme.Ink,
                 ShowRandomMatchScreen, 16);
             UiFactory.SetHeight(randomBtn, 52);
 
-            var friendBtn = UiFactory.Button(centered, "친구 매칭", UITheme.Surface2, UITheme.Ink,
+            var friendBtn = UiFactory.Button(centered, "フレンド対戦", UITheme.Surface2, UITheme.Ink,
                 ShowFriendMatchScreen, 16);
             UiFactory.SetHeight(friendBtn, 52);
 
-            var resetBtn = UiFactory.Button(centered, "닉네임 변경", UITheme.Bg, UITheme.Muted, ShowNicknameScreen, 12);
+            var resetBtn = UiFactory.Button(centered, "ニックネーム変更", UITheme.Bg, UITheme.Muted, ShowNicknameScreen, 12);
             UiFactory.SetHeight(resetBtn, 30);
         }
 
@@ -272,10 +272,10 @@ namespace LiarsBatting.Presentation
             centered.offsetMin = Vector2.zero;
             centered.offsetMax = Vector2.zero;
 
-            _randomMatchStatusText = UiFactory.Text(centered, "매칭 상대를 찾는 중...", 18, UITheme.Ink,
+            _randomMatchStatusText = UiFactory.Text(centered, "対戦相手を探しています...", 18, UITheme.Ink,
                 TextAnchor.MiddleCenter, FontStyle.Bold);
 
-            var cancelBtn = UiFactory.Button(centered, "취소", UITheme.Surface2, UITheme.Ink, () =>
+            var cancelBtn = UiFactory.Button(centered, "キャンセル", UITheme.Surface2, UITheme.Ink, () =>
             {
                 _matchmaking?.LeaveRandomQueue();
                 ShowMainMenu();
@@ -286,9 +286,9 @@ namespace LiarsBatting.Presentation
         private void ShowRandomMatchScreen()
         {
             ShowOnly(_randomMatchScreen);
-            _headerText.text = "랜덤 매칭";
+            _headerText.text = "ランダム対戦";
             _tokenText.text = "";
-            _randomMatchStatusText.text = "매칭 상대를 찾는 중...";
+            _randomMatchStatusText.text = "対戦相手を探しています...";
 
             _matchmaking = new MatchmakingService(_firestore, this, _nickname);
             _matchmaking.JoinRandomQueue(
@@ -297,7 +297,7 @@ namespace LiarsBatting.Presentation
                     _matchmaking.LeaveRandomQueue();
                     BeginOnlineMatchFlow(matchId, opponent);
                 },
-                error => _randomMatchStatusText.text = $"오류: {error}");
+                error => _randomMatchStatusText.text = $"エラー：{error}");
         }
 
         private void BuildFriendMatchScreen(Transform root)
@@ -311,23 +311,23 @@ namespace LiarsBatting.Presentation
             centered.offsetMin = Vector2.zero;
             centered.offsetMax = Vector2.zero;
 
-            UiFactory.Text(centered, "친구 매칭", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
-            UiFactory.Text(centered, "상대 닉네임을 입력해 초대를 보내세요.\n이 화면에 있는 동안 받은 초대도 자동으로 뜹니다.",
+            UiFactory.Text(centered, "フレンド対戦", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
+            UiFactory.Text(centered, "相手のニックネームを入力して招待を送ってください。\nこの画面を開いている間に届いた招待も自動的に表示されます。",
                 12, UITheme.Muted, TextAnchor.MiddleCenter);
 
-            _friendTargetInput = UiFactory.InputField(centered, "상대 닉네임");
+            _friendTargetInput = UiFactory.InputField(centered, "相手のニックネーム");
             _friendStatusText = UiFactory.Text(centered, "", 12, UITheme.Muted, TextAnchor.MiddleCenter);
             _friendStatusText.gameObject.SetActive(false);
 
             Button inviteBtn = null;
-            inviteBtn = UiFactory.Button(centered, "초대 보내기", UITheme.Accent, Color.white, () =>
+            inviteBtn = UiFactory.Button(centered, "招待を送る", UITheme.Accent, Color.white, () =>
             {
                 string target = _friendTargetInput.text.Trim();
-                if (target.Length == 0) { ShowFriendStatus("닉네임을 입력해주세요.", true); return; }
-                if (target == _nickname) { ShowFriendStatus("자기 자신은 초대할 수 없습니다.", true); return; }
+                if (target.Length == 0) { ShowFriendStatus("ニックネームを入力してください。", true); return; }
+                if (target == _nickname) { ShowFriendStatus("自分自身は招待できません。", true); return; }
 
                 inviteBtn.interactable = false;
-                ShowFriendStatus("초대를 보내는 중...", false);
+                ShowFriendStatus("招待を送信中...", false);
 
                 _matchmaking.SendFriendInvite(target,
                     acceptedMatchId =>
@@ -338,7 +338,7 @@ namespace LiarsBatting.Presentation
                     () =>
                     {
                         inviteBtn.interactable = true;
-                        ShowFriendStatus("상대가 초대를 거절했습니다.", true);
+                        ShowFriendStatus("相手が招待を拒否しました。", true);
                     },
                     error =>
                     {
@@ -348,7 +348,7 @@ namespace LiarsBatting.Presentation
             }, 15);
             UiFactory.SetHeight(inviteBtn, 44);
 
-            var backBtn = UiFactory.Button(centered, "메인 메뉴로", UITheme.Bg, UITheme.Muted, () =>
+            var backBtn = UiFactory.Button(centered, "メインメニューへ", UITheme.Bg, UITheme.Muted, () =>
             {
                 _matchmaking?.StopPolling();
                 ShowMainMenu();
@@ -366,7 +366,7 @@ namespace LiarsBatting.Presentation
         private void ShowFriendMatchScreen()
         {
             ShowOnly(_friendMatchScreen);
-            _headerText.text = "친구 매칭";
+            _headerText.text = "フレンド対戦";
             _tokenText.text = "";
             _friendTargetInput.text = "";
             _friendStatusText.gameObject.SetActive(false);
@@ -388,21 +388,21 @@ namespace LiarsBatting.Presentation
             _inviteWatcher.WatchForIncomingInvite(
                 (fromNickname, matchId) =>
                 {
-                    _choiceOverlay.ShowMixed($"{fromNickname}님이 대전을 신청했습니다.",
-                        ("수락", UITheme.Accent, () =>
+                    _choiceOverlay.ShowMixed($"{fromNickname}さんから対戦の招待が届きました。",
+                        ("承諾", UITheme.Accent, () =>
                         {
                             _inviteWatcher.RespondToInvite(fromNickname, matchId, true,
                                 () => BeginOnlineMatchFlow(matchId, fromNickname),
-                                error => Debug.LogWarning($"초대 수락 실패: {error}"));
+                                error => Debug.LogWarning($"招待の承諾に失敗：{error}"));
                         }),
-                        ("거절", UITheme.Clay, () =>
+                        ("拒否", UITheme.Clay, () =>
                         {
                             _inviteWatcher.RespondToInvite(fromNickname, matchId, false,
-                                () => { }, error => Debug.LogWarning($"초대 응답 실패: {error}"));
+                                () => { }, error => Debug.LogWarning($"招待への応答に失敗：{error}"));
                             StartGlobalInviteWatch(); // resume watching for the next one
                         }));
                 },
-                error => Debug.LogWarning($"초대 확인 실패: {error}"));
+                error => Debug.LogWarning($"招待の確認に失敗：{error}"));
         }
 
         // Both matchmaking paths land here once paired. One more read of the
@@ -418,7 +418,7 @@ namespace LiarsBatting.Presentation
                 if (doc == null)
                 {
                     ShowMainMenu();
-                    _choiceOverlay.Show("매칭 정보를 불러오지 못했습니다.", ("확인", () => { }));
+                    _choiceOverlay.Show("対戦情報を読み込めませんでした。", ("確認", () => { }));
                     return;
                 }
 
@@ -435,7 +435,7 @@ namespace LiarsBatting.Presentation
             }, error =>
             {
                 ShowMainMenu();
-                _choiceOverlay.Show($"매칭 정보를 불러오지 못했습니다: {error}", ("확인", () => { }));
+                _choiceOverlay.Show($"対戦情報を読み込めませんでした：{error}", ("確認", () => { }));
             });
         }
 
@@ -463,7 +463,7 @@ namespace LiarsBatting.Presentation
                     bool wasLie = !reported.Equals(trueResult);
                     _statusPanel.OpponentAttackHistory.AddRow(guess, reported, wasLie);
                     _network.SubmitDefenseResponse(trueResult, reported);
-                    _headerText.text = $"{_network.OpponentNickname}님의 판단을 기다리는 중...";
+                    _headerText.text = $"{_network.OpponentNickname}さんの判定を待っています...";
                     _attackPicker.SetInteractable(false);
                 });
             };
@@ -480,7 +480,7 @@ namespace LiarsBatting.Presentation
                     onChallenge: () =>
                     {
                         _network.SubmitChallenge();
-                        _headerText.text = $"{_network.OpponentNickname}님의 응답을 기다리는 중...";
+                        _headerText.text = $"{_network.OpponentNickname}さんの返答を待っています...";
                     });
             };
 
@@ -488,7 +488,7 @@ namespace LiarsBatting.Presentation
 
             _network.OnIMustReveal += () =>
             {
-                PromptPlayerRevealChoice("비밀번호 한 자리를 공개해야 합니다.", index =>
+                PromptPlayerRevealChoice("パスワードを1桁公開する必要があります。", index =>
                 {
                     if (index < 0) { UpdateOnlineTurnUI(); return; }
                     _network.SubmitReveal(index, _state.PlayerSecret[index]);
@@ -532,8 +532,8 @@ namespace LiarsBatting.Presentation
 
             _network.OnPriestAnswer += answer =>
             {
-                string text = answer ? "맞습니다" : "아닙니다";
-                _choiceOverlay.Show($"상대의 답변: \"{text}\"", ("확인", () => { }));
+                string text = answer ? "その通りです" : "違います";
+                _choiceOverlay.Show($"相手の返答：\"{text}\"", ("確認", () => { }));
             };
 
             // Wizard: opponent used their ability, so I must reveal one of my own
@@ -557,7 +557,7 @@ namespace LiarsBatting.Presentation
         private void BeginOnlineAttackTurn()
         {
             RefreshTokenHeader();
-            _headerText.text = $"내 턴 — {_network.OpponentNickname}님의 비밀번호를 추리하세요";
+            _headerText.text = $"自分のターン — {_network.OpponentNickname}さんのパスワードを推理してください";
             _attackPicker.SetInteractable(true);
             RefreshPriestButtonVisibility(true);
             _timer.Start(GuessSeconds, () =>
@@ -571,7 +571,7 @@ namespace LiarsBatting.Presentation
         {
             _timer.Stop();
             RefreshTokenHeader();
-            _headerText.text = $"{_network.OpponentNickname}님의 턴 — 대기 중";
+            _headerText.text = $"{_network.OpponentNickname}さんのターン — 待機中";
             _attackPicker.SetInteractable(false);
             RefreshPriestButtonVisibility(false);
         }
@@ -582,7 +582,7 @@ namespace LiarsBatting.Presentation
             _attackPicker.ResetAll();
             _myLastOnlineGuess = guess;
             _attackPicker.SetInteractable(false);
-            _headerText.text = $"{_network.OpponentNickname}님의 응답을 기다리는 중...";
+            _headerText.text = $"{_network.OpponentNickname}さんの返答を待っています...";
             bool keepTurn = _state.PlayerExtraTurnPending;
             _state.PlayerExtraTurnPending = false;
             _network.SubmitGuess(guess, keepTurn);
@@ -593,8 +593,8 @@ namespace LiarsBatting.Presentation
             _timer.Stop();
             _network?.Stop();
             _gameOverText.text = won
-                ? "승리! 상대 비밀번호를 정확히 맞혔습니다."
-                : $"패배. 내 비밀번호 {string.Join(" ", _state.PlayerSecret)}를 들켰습니다.";
+                ? "勝利！相手のパスワードを正確に当てました。"
+                : $"敗北。自分のパスワード {string.Join(" ", _state.PlayerSecret)}を見破られました。";
             _gameOverScreen.SetActive(true);
         }
 
@@ -611,7 +611,7 @@ namespace LiarsBatting.Presentation
             centered.offsetMin = Vector2.zero;
             centered.offsetMax = Vector2.zero;
 
-            UiFactory.Text(centered, "영웅을 선택하세요", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
+            UiFactory.Text(centered, "ヒーローを選択してください", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
 
             var grid = UiFactory.Grid(centered, "HeroGrid", columns: 4, cellSize: 150, spacing: 14);
             UiFactory.SetHeight(grid, 150 * 2 + 14); // 7 heroes over 4 columns = 2 rows
@@ -653,7 +653,7 @@ namespace LiarsBatting.Presentation
         {
             ShowOnly(_heroSelectScreen);
             SetHeroButtonsInteractable(true);
-            _headerText.text = _isOnlineMatch ? $"영웅 선택 — 상대: {_network.OpponentNickname}" : "영웅을 선택하세요";
+            _headerText.text = _isOnlineMatch ? $"ヒーロー選択 — 相手：{_network.OpponentNickname}" : "ヒーローを選択してください";
             _tokenText.text = "";
             _timer.Start(HeroPickSeconds, () => OnHeroChosen(RandomHeroId()));
         }
@@ -669,7 +669,7 @@ namespace LiarsBatting.Presentation
 
             if (_isOnlineMatch)
             {
-                _headerText.text = "상대의 영웅 선택을 기다리는 중...";
+                _headerText.text = "相手のヒーロー選択を待っています...";
                 _network.MarkMyHeroReady(hero);
                 return; // ProceedToSecretSetup() fires from OnBothHeroesReady
             }
@@ -726,10 +726,10 @@ namespace LiarsBatting.Presentation
             centered.offsetMin = Vector2.zero;
             centered.offsetMax = Vector2.zero;
 
-            UiFactory.Text(centered, "당신의 비밀번호 4자리를 선택하세요", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
-            UiFactory.Text(centered, "0~9 중 중복 없는 숫자 4개. 상대는 이 번호를 볼 수 없습니다.", 13, UITheme.Muted, TextAnchor.MiddleCenter);
+            UiFactory.Text(centered, "自分のパスワード4桁を選択してください", 20, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
+            UiFactory.Text(centered, "0〜9から重複しない4つの数字を選びます。相手には見えません。", 13, UITheme.Muted, TextAnchor.MiddleCenter);
 
-            _setupPicker = new CardPickerView(centered, "내 비밀번호", "게임 시작", OnSecretChosen);
+            _setupPicker = new CardPickerView(centered, "自分のパスワード", "ゲーム開始", OnSecretChosen);
         }
 
         // Shared by both modes: at this point _state already has both heroes set
@@ -744,8 +744,8 @@ namespace LiarsBatting.Presentation
             _setupPicker.SetDigitEnabled(9, !opponentIsDemonHunter);
 
             _headerText.text = opponentIsDemonHunter
-                ? "비밀번호 준비 — 상대 능력으로 9는 사용할 수 없습니다"
-                : "비밀번호 준비";
+                ? "パスワード準備 — 相手の能力により9は使えません"
+                : "パスワード準備";
             _tokenText.text = "";
 
             _timer.Start(SecretPickSeconds, () =>
@@ -806,9 +806,9 @@ namespace LiarsBatting.Presentation
                 padding: new RectOffset(18, 18, 18, 18));
             UiFactory.StretchToFillParent(rightInner);
 
-            _attackPicker = new CardPickerView(rightInner, "내 추리 — 숫자 카드", "추측 제출", OnPlayerGuessSubmitted);
+            _attackPicker = new CardPickerView(rightInner, "自分の推理 — 数字カード", "推測を送信", OnPlayerGuessSubmitted);
 
-            _priestButton = UiFactory.Button(rightInner, "사제 능력: 한 자리 묻기", UITheme.Clay, Color.white,
+            _priestButton = UiFactory.Button(rightInner, "プリースト能力：1桁を尋ねる", UITheme.Clay, Color.white,
                 ShowPriestPositionPicker, 13);
             UiFactory.SetHeight(_priestButton, 36);
             _priestButton.gameObject.SetActive(false);
@@ -903,13 +903,13 @@ namespace LiarsBatting.Presentation
             for (int i = 0; i < 4; i++)
             {
                 int pos = i;
-                buttons[i] = ($"{pos + 1}번째 자리", () => ShowPriestDigitGuessPicker(pos));
+                buttons[i] = ($"{pos + 1}桁目", () => ShowPriestDigitGuessPicker(pos));
             }
-            _choiceOverlay.Show("어느 자리를 물어볼까요?", buttons);
+            _choiceOverlay.Show("どの桁について尋ねますか？", buttons);
         }
 
-        // Second step: guess a specific digit for that position ("2번째 자리
-        // 숫자 5지?") instead of asking an open "what's the digit" question.
+        // Second step: guess a specific digit for that position ("2桁目は5？")
+        // instead of asking an open "what's the digit" question.
         private void ShowPriestDigitGuessPicker(int position)
         {
             var options = new List<(string, Action)>();
@@ -918,7 +918,7 @@ namespace LiarsBatting.Presentation
                 int digit = d;
                 options.Add((digit.ToString(), () => OnPriestQuerySubmitted(position, digit)));
             }
-            _choiceOverlay.Show($"{position + 1}번째 자리, 어떤 숫자일지 물어볼까요?", options.ToArray());
+            _choiceOverlay.Show($"{position + 1}桁目はどの数字か尋ねますか？", options.ToArray());
         }
 
         private void OnPriestQuerySubmitted(int position, int guessedDigit)
@@ -932,15 +932,15 @@ namespace LiarsBatting.Presentation
 
             if (_isOnlineMatch)
             {
-                _headerText.text = $"{_network.OpponentNickname}님의 답변을 기다리는 중...";
+                _headerText.text = $"{_network.OpponentNickname}さんの返答を待っています...";
                 _network.SubmitPriestQuery(position, guessedDigit);
             }
             else
             {
                 bool answer = _state.AiSecret[position] == guessedDigit;
-                string answerText = answer ? "맞습니다" : "아닙니다";
-                _choiceOverlay.Show($"상대의 답변: {position + 1}번째 자리가 {guessedDigit}인지에 대해 \"{answerText}\"",
-                    ("확인", EndMyAttackTurnAndPassToOpponent));
+                string answerText = answer ? "その通りです" : "違います";
+                _choiceOverlay.Show($"相手の返答：{position + 1}桁目が{guessedDigit}かどうかは\n\"{answerText}\"",
+                    ("確認", EndMyAttackTurnAndPassToOpponent));
             }
         }
 
@@ -950,9 +950,9 @@ namespace LiarsBatting.Presentation
         private void PromptPriestDefenseChoice(int position, int guessedDigit, Action<bool> onAnswered)
         {
             bool trueAnswer = _state.PlayerSecret[position] == guessedDigit;
-            string truthLabel = trueAnswer ? "예" : "아니오";
-            string message = $"상대가 묻습니다: {position + 1}번째 자리가 {guessedDigit}인가요?\n진짜 답: {truthLabel}";
-            _choiceOverlay.Show(message, ("확인", () => onAnswered(trueAnswer)));
+            string truthLabel = trueAnswer ? "はい" : "いいえ";
+            string message = $"相手が尋ねています：{position + 1}桁目は{guessedDigit}ですか？\n本当の答え：{truthLabel}";
+            _choiceOverlay.Show(message, ("確認", () => onAnswered(trueAnswer)));
         }
 
         private void BuildGameOverScreen(Transform root)
@@ -974,7 +974,7 @@ namespace LiarsBatting.Presentation
             box.gameObject.AddComponent<Image>().color = UITheme.Bg;
 
             _gameOverText = UiFactory.Text(box, "", 24, UITheme.Ink, TextAnchor.MiddleCenter, FontStyle.Bold);
-            UiFactory.Button(box, "메인 메뉴로", UITheme.Accent, Color.white, () =>
+            UiFactory.Button(box, "メインメニューへ", UITheme.Accent, Color.white, () =>
             {
                 _timer.Stop();
                 _network?.Stop();
@@ -1005,7 +1005,7 @@ namespace LiarsBatting.Presentation
         private void ShowNicknameScreen()
         {
             ShowOnly(_nicknameScreen);
-            _headerText.text = "라이어스 배팅";
+            _headerText.text = "ライアーズ・バッティング";
             _tokenText.text = "";
         }
 
@@ -1013,13 +1013,13 @@ namespace LiarsBatting.Presentation
         {
             _timer.Stop();
             ShowOnly(_mainMenuScreen);
-            _menuGreetingText.text = $"{_nickname}님, 환영합니다";
-            _headerText.text = "라이어스 배팅";
+            _menuGreetingText.text = $"{_nickname}さん、ようこそ";
+            _headerText.text = "ライアーズ・バッティング";
             _tokenText.text = "";
             StartGlobalInviteWatch();
         }
 
-        // AI-mode entry point (the "AI 매칭" button). Picks the AI's hero and
+        // AI-mode entry point (the "AI対戦" button). Picks the AI's hero and
         // (if it's DemonHunter) restricts its own guessing model right away,
         // then hands off to the shared hero-select screen.
         private void StartAiMatch()
@@ -1084,7 +1084,7 @@ namespace LiarsBatting.Presentation
             RefreshRevealedRows();
 
             _attackPicker.SetInteractable(false);
-            _headerText.text = $"{_network.OpponentNickname}님이 비밀번호를 정하는 중...";
+            _headerText.text = $"{_network.OpponentNickname}さんがパスワードを決めています...";
             _tokenText.text = "";
 
             _network.MarkMySecretReady();
@@ -1094,13 +1094,13 @@ namespace LiarsBatting.Presentation
         {
             // The opponent's remaining LIE TOKEN count is exactly the kind of
             // information the game is designed to hide -- only my own is shown.
-            _tokenText.text = $"내 LIE TOKEN {_state.PlayerLieTokens}/2";
+            _tokenText.text = $"自分の嘘トークン {_state.PlayerLieTokens}/2";
         }
 
         private void BeginPlayerAttackTurn()
         {
             RefreshTokenHeader();
-            _headerText.text = "내 턴 — 상대 비밀번호를 추리하세요";
+            _headerText.text = "自分のターン — 相手のパスワードを推理してください";
             _attackPicker.SetInteractable(true);
             RefreshPriestButtonVisibility(true);
             _timer.Start(GuessSeconds, () =>
@@ -1203,12 +1203,12 @@ namespace LiarsBatting.Presentation
                     if (aiLied)
                     {
                         // Caught it: the AI has to open one of its own digits.
-                        RevealAiDigit(prefix: "적중! 상대가 거짓말을 했습니다.", onDone: EndMyAttackTurnAndPassToOpponent);
+                        RevealAiDigit(prefix: "的中！相手は嘘をついていました。", onDone: EndMyAttackTurnAndPassToOpponent);
                     }
                     else
                     {
                         // Wrong accusation: the player opens one of their own digits.
-                        PromptPlayerRevealChoice("헛다리! 상대는 진실을 말했습니다. 내 비밀번호 한 자리를 공개하세요.",
+                        PromptPlayerRevealChoice("見当違い！相手は真実を伝えていました。自分のパスワードを1桁公開してください。",
                             _ => EndMyAttackTurnAndPassToOpponent());
                     }
                 });
@@ -1217,7 +1217,7 @@ namespace LiarsBatting.Presentation
         private void BeginAiAttackTurn()
         {
             RefreshTokenHeader();
-            _headerText.text = "상대 턴 — 왼쪽에서 방어 결과를 확인하세요";
+            _headerText.text = "相手のターン — 左側で防御結果を確認してください";
             _attackPicker.SetInteractable(false);
             RefreshPriestButtonVisibility(false);
 
@@ -1277,7 +1277,7 @@ namespace LiarsBatting.Presentation
                     // Caught: the reported value is known-false, so there's nothing
                     // honest to narrow the AI's model by this turn -- it only gains
                     // the digit reveal, not extra information.
-                    PromptPlayerRevealChoice("상대가 당신의 거짓말을 눈치챘습니다! 내 비밀번호 한 자리를 공개하세요.",
+                    PromptPlayerRevealChoice("相手に嘘を見抜かれました！自分のパスワードを1桁公開してください。",
                         _ => EndAiAttackTurnAndPassToPlayer());
                 }
                 else
@@ -1285,7 +1285,7 @@ namespace LiarsBatting.Presentation
                     // Wrong accusation: the AI opens one of its own digits, but the
                     // (confirmed-true) result is still good information to narrow by.
                     _ai.NarrowByOwnGuess(guess, reported);
-                    RevealAiDigit(prefix: "상대가 당신을 의심했지만 틀렸습니다!", onDone: EndAiAttackTurnAndPassToPlayer);
+                    RevealAiDigit(prefix: "相手はあなたを疑いましたが、間違いでした！", onDone: EndAiAttackTurnAndPassToPlayer);
                 }
             });
         }
@@ -1310,13 +1310,13 @@ namespace LiarsBatting.Presentation
             int idx = _ai.PickRevealIndex(_state.AiRevealed);
             if (idx < 0)
             {
-                _choiceOverlay.Show($"{prefix} (이미 모든 자리가 공개됨)", ("확인", onDone));
+                _choiceOverlay.Show($"{prefix}（すでに全桁が公開されています）", ("確認", onDone));
                 return;
             }
             _state.AiRevealed[idx] = true;
             RefreshRevealedRows();
-            _choiceOverlay.Show($"{prefix} 상대 비밀번호 {idx + 1}번째 자리 공개: {_state.AiSecret[idx]}",
-                ("확인", onDone));
+            _choiceOverlay.Show($"{prefix} 相手のパスワード{idx + 1}桁目を公開：{_state.AiSecret[idx]}",
+                ("確認", onDone));
         }
 
         // Lets the player pick which of their own still-hidden digits to open.
@@ -1330,7 +1330,7 @@ namespace LiarsBatting.Presentation
 
             if (open.Count == 0)
             {
-                _choiceOverlay.Show($"{message} (이미 모든 자리가 공개됨)", ("확인", () => onRevealed(-1)));
+                _choiceOverlay.Show($"{message}（すでに全桁が公開されています）", ("確認", () => onRevealed(-1)));
                 return;
             }
 
@@ -1338,7 +1338,7 @@ namespace LiarsBatting.Presentation
             for (int n = 0; n < open.Count; n++)
             {
                 int i = open[n];
-                options[n] = ($"{i + 1}번째: {_state.PlayerSecret[i]}", () =>
+                options[n] = ($"{i + 1}桁目：{_state.PlayerSecret[i]}", () =>
                 {
                     _state.PlayerRevealed[i] = true;
                     // Only set in AI mode -- in an online match there's no local
@@ -1371,18 +1371,18 @@ namespace LiarsBatting.Presentation
             }
 
             string resultText = trueResult.IsOut ? "OUT" : $"{trueResult.Strike}S {trueResult.Ball}B";
-            string message = $"상대 추측: {string.Join(" ", opponentGuess)}\n진짜 결과: {resultText}";
+            string message = $"相手の推測：{string.Join(" ", opponentGuess)}\n本当の結果：{resultText}";
 
             bool canLie = lieTokensLeft > 0 && (!trueResult.IsWin || canLieAboutWin);
             if (!canLie)
             {
-                _choiceOverlay.Show(message, ("진실대로 전송", () => Resolve(trueResult, false)));
+                _choiceOverlay.Show(message, ("真実を送信", () => Resolve(trueResult, false)));
             }
             else
             {
                 _choiceOverlay.ShowMixed(message,
-                    ("진실대로 전송", UITheme.Accent, () => Resolve(trueResult, false)),
-                    ($"LIE TOKEN 사용 ({lieTokensLeft}개)", UITheme.Clay,
+                    ("真実を送信", UITheme.Accent, () => Resolve(trueResult, false)),
+                    ($"嘘トークンを使用（残り{lieTokensLeft}個）", UITheme.Clay,
                         () => PromptFakeStrikeChoice(trueResult, (r, u) => Resolve(r, u))));
             }
 
@@ -1406,9 +1406,9 @@ namespace LiarsBatting.Presentation
             for (int i = 0; i < strikeOptions.Count; i++)
             {
                 int s = strikeOptions[i];
-                buttons[i] = ($"{s} 스트라이크", UITheme.StrikeFg, () => PromptFakeBallChoice(s, allFakes, onChoice));
+                buttons[i] = ($"ストライク{s}個", UITheme.StrikeFg, () => PromptFakeBallChoice(s, allFakes, onChoice));
             }
-            _choiceOverlay.ShowMixed("거짓말: 스트라이크를 몇 개로 알려줄까요?", buttons);
+            _choiceOverlay.ShowMixed("嘘：ストライクを何個と伝えますか？", buttons);
         }
 
         private void PromptFakeBallChoice(int strike, List<JudgeResult> allFakes, Action<JudgeResult, bool> onChoice)
@@ -1424,10 +1424,10 @@ namespace LiarsBatting.Presentation
             for (int i = 0; i < matching.Count; i++)
             {
                 var fake = matching[i];
-                string label = fake.IsOut ? "OUT" : $"{fake.Ball} 볼";
+                string label = fake.IsOut ? "OUT" : $"ボール{fake.Ball}個";
                 buttons[i] = (label, UITheme.BallFg, () => onChoice(fake, true));
             }
-            _choiceOverlay.ShowMixed($"거짓말: {strike} 스트라이크로 정했습니다. 볼은 몇 개로 알려줄까요?", buttons);
+            _choiceOverlay.ShowMixed($"嘘：ストライクは{strike}個にしました。ボールは何個と伝えますか？", buttons);
         }
 
         // Shared trust/challenge decision (point 4). Owns its own 10s timer:
@@ -1442,13 +1442,13 @@ namespace LiarsBatting.Presentation
             void ResolveChallenge() { _timer.Stop(); onChallenge(); }
 
             string resultText = reported.IsOut ? "OUT" : $"{reported.Strike}S {reported.Ball}B";
-            string message = $"상대가 알려준 결과: {resultText}\n믿으시겠습니까, 거짓말 같습니까?";
+            string message = $"相手が伝えた結果：{resultText}\n信じますか、それとも嘘だと思いますか？";
             bool rogueAvailable = _state.PlayerHero == HeroId.Rogue && _state.PlayerAbilityCharges > 0;
 
             var options = new List<(string, Color, Action)>
             {
-                ("믿는다", UITheme.Accent, (Action)ResolveTrust),
-                ("거짓말 같다 (의심)", UITheme.Clay, (Action)ResolveChallenge)
+                ("信じる", UITheme.Accent, (Action)ResolveTrust),
+                ("嘘だと思う（疑う）", UITheme.Clay, (Action)ResolveChallenge)
             };
 
             if (rogueAvailable)
@@ -1457,7 +1457,7 @@ namespace LiarsBatting.Presentation
                 // left to decide -- using it just tells you the truth and acts on
                 // it immediately (challenge if it was a lie, trust if it wasn't),
                 // instead of asking you to pick again after being told the answer.
-                options.Add(($"진실 간파 ({_state.PlayerAbilityCharges}회)", UITheme.StrikeFg, (Action)(() =>
+                options.Add(($"真実看破（残り{_state.PlayerAbilityCharges}回）", UITheme.StrikeFg, (Action)(() =>
                 {
                     _timer.Stop();
                     _state.PlayerAbilityCharges--;
@@ -1491,8 +1491,8 @@ namespace LiarsBatting.Presentation
 
             void ShowRogueResult(bool wasLie)
             {
-                string resultMessage = wasLie ? "진실 간파 결과: 거짓말이었습니다!" : "진실 간파 결과: 진실이었습니다!";
-                _choiceOverlay.Show(resultMessage, ("확인", wasLie ? (Action)ResolveChallenge : ResolveTrust));
+                string resultMessage = wasLie ? "真実看破の結果：嘘でした！" : "真実看破の結果：真実でした！";
+                _choiceOverlay.Show(resultMessage, ("確認", wasLie ? (Action)ResolveChallenge : ResolveTrust));
             }
 
             System.Collections.IEnumerator ShowRogueResultNextFrame(bool wasLie)
@@ -1509,8 +1509,8 @@ namespace LiarsBatting.Presentation
         {
             _timer.Stop();
             _gameOverText.text = playerWon
-                ? $"승리! 상대 비밀번호는 {string.Join(" ", _state.AiSecret)} 였습니다."
-                : $"패배. 내 비밀번호 {string.Join(" ", _state.PlayerSecret)}를 들켰습니다.";
+                ? $"勝利！相手のパスワードは {string.Join(" ", _state.AiSecret)} でした。"
+                : $"敗北。自分のパスワード {string.Join(" ", _state.PlayerSecret)}を見破られました。";
             _gameOverScreen.SetActive(true);
         }
     }

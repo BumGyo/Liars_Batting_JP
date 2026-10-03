@@ -115,7 +115,7 @@ namespace LiarsBatting.Presentation
             }
 
             if (wasLie && revealLie)
-                UiFactory.Badge(row, "거짓", UITheme.ClaySoft, UITheme.Clay);
+                UiFactory.Badge(row, "嘘", UITheme.ClaySoft, UITheme.Clay);
 
             Canvas.ForceUpdateCanvases();
             _scrollRect.verticalNormalizedPosition = 0f;
