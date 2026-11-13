@@ -1,10 +1,10 @@
 using UnityEngine;
 
-/// 카드/배경 스프라이트를 Resources에서 불러오는 헬퍼.
-/// uGUI(Image.sprite)와 UI Toolkit(style.backgroundImage) 모두에서 쓸 수 있습니다.
+/// カード/背景スプライトをResourcesから読み込むヘルパー。
+/// uGUI(Image.sprite)とUI Toolkit(style.backgroundImage)の両方で使用できます。
 ///
-/// 카드 스킨(보상)을 장착하면 Resources/Cosmetics/<스킨 id>/card_N 그림을 대신 씁니다.
-/// 그림이 없는 스킨은 Tint 색조로만 표현합니다.
+/// カードスキン（報酬）を装備すると Resources/Cosmetics/<スキンid>/card_N 画像を代わりに使用します。
+/// 画像がないスキンはTint色調のみで表現します。
 public static class CardArt
 {
     // The equipped card skin's tint, used only when that skin has no art of its own. Every view
@@ -26,7 +26,7 @@ public static class CardArt
 
     public static Sprite Digit(int n)
     {
-        if (n < 0 || n > 9) { Debug.LogWarning($"CardArt: 0~9 범위가 아닙니다 ({n})"); return null; }
+        if (n < 0 || n > 9) { Debug.LogWarning($"CardArt: 0〜9の範囲外です ({n})"); return null; }
         return Card($"card_{n}");
     }
     public static Sprite Back()       => Card("card_back");
@@ -50,7 +50,7 @@ public static class CardArt
     static Sprite Load(string path)
     {
         var s = Resources.Load<Sprite>(path);
-        if (s == null) Debug.LogWarning("CardArt: 스프라이트를 찾을 수 없음 Resources/" + path);
+        if (s == null) Debug.LogWarning("CardArt: スプライトが見つかりません Resources/" + path);
         return s;
     }
 }

@@ -23,51 +23,51 @@ namespace LiarsBatting.Core
         {
             new HeroInfo
             {
-                Id = HeroId.Hunter, Name = "허언수",
-                AbilityName = "사냥의 거짓말",
-                AbilityDescription = "정답(4스트라이크)까지도 거짓으로 알릴 수 있습니다.",
+                Id = HeroId.Hunter, Name = "虚言手",
+                AbilityName = "狩りの嘘",
+                AbilityDescription = "正解（4ストライク）であっても偽りの結果を伝えることができます。",
                 Charges = -1, ConsumesTurn = false
             },
             new HeroInfo
             {
-                Id = HeroId.Paladin, Name = "백회복",
-                AbilityName = "신념의 회복",
-                AbilityDescription = "LIE TOKEN을 1회 회복합니다.",
+                Id = HeroId.Paladin, Name = "白回復",
+                AbilityName = "信念の回復",
+                AbilityDescription = "LIE TOKENを1つ回復します。",
                 Charges = 1, ConsumesTurn = false
             },
             new HeroInfo
             {
-                Id = HeroId.Rogue, Name = "진가려",
-                AbilityName = "진실 간파",
-                AbilityDescription = "게임당 1회, 상대 응답의 진실/거짓 여부를 확인합니다.",
+                Id = HeroId.Rogue, Name = "真選",
+                AbilityName = "真実看破",
+                AbilityDescription = "1試合につき1回、相手の回答が真実か嘘かを確認します。",
                 Charges = 1, ConsumesTurn = false
             },
             new HeroInfo
             {
-                Id = HeroId.Priest, Name = "한자리",
-                AbilityName = "한 자리 심문",
-                AbilityDescription = "게임당 2회, 4자리 전체 대신 원하는 한 자리 숫자를 직접 묻습니다. 턴을 소모합니다.",
+                Id = HeroId.Priest, Name = "一桁",
+                AbilityName = "一桁尋問",
+                AbilityDescription = "1試合につき2回、4桁すべてではなく指定した1桁の数字を直接質問します。ターンを消費します。",
                 Charges = 2, ConsumesTurn = true
             },
             new HeroInfo
             {
-                Id = HeroId.DemonHunter, Name = "구제외",
-                AbilityName = "봉인의 사슬",
-                AbilityDescription = "상대의 비밀번호 자릿수 풀을 0~8로 제한합니다.",
+                Id = HeroId.DemonHunter, Name = "九除外",
+                AbilityName = "封印の鎖",
+                AbilityDescription = "相手の暗証番号の数字候補を0〜8に制限します。",
                 Charges = 0, ConsumesTurn = false
             },
             new HeroInfo
             {
-                Id = HeroId.Warrior, Name = "연속철",
-                AbilityName = "연속 돌격",
-                AbilityDescription = "게임당 1회, 이번 턴이 끝난 뒤에도 턴을 유지합니다.",
+                Id = HeroId.Warrior, Name = "連続鉄",
+                AbilityName = "連続突撃",
+                AbilityDescription = "1試合につき1回、このターン終了後も続けて自分のターンを維持します。",
                 Charges = 1, ConsumesTurn = false
             },
             new HeroInfo
             {
-                Id = HeroId.Wizard, Name = "임무작",
-                AbilityName = "천리안",
-                AbilityDescription = "게임당 1회, 양쪽 비밀번호에서 무작위 한 자리씩 공개합니다. 턴을 소모하지 않습니다.",
+                Id = HeroId.Wizard, Name = "任無作",
+                AbilityName = "千里眼",
+                AbilityDescription = "1試合につき1回、お互いの暗証番号からランダムに1桁ずつ公開します。ターンを消費しません。",
                 Charges = 1, ConsumesTurn = false
             },
         };

@@ -33,9 +33,9 @@ namespace LiarsBatting.Network
         // reserved ids. Returns an error message, or null when the name is usable.
         public static string NicknameProblem(string name)
         {
-            if (string.IsNullOrWhiteSpace(name)) return "닉네임을 입력해주세요.";
+            if (string.IsNullOrWhiteSpace(name)) return "ニックネームを入力してください。";
             if (name.Contains("/") || name == "." || name == ".." || (name.StartsWith("__") && name.EndsWith("__")))
-                return "닉네임에 쓸 수 없는 문자가 있습니다. ('/', '.', '..' 등)";
+                return "ニックネームに使用できない文字が含まれています。（'/', '.', '..' など）";
             return null;
         }
 
@@ -48,8 +48,8 @@ namespace LiarsBatting.Network
                 ["lastSeen"] = FirestoreClient.IntField(DateTimeOffset.UtcNow.ToUnixTimeSeconds())
             };
             _db.CreateDocument(Collection, nickname, fields, onRegistered,
-                () => onError?.Invoke("이미 사용 중인 닉네임입니다."),
-                error => onError?.Invoke($"등록에 실패했습니다: {error}"));
+                () => onError?.Invoke("すでに使用されているニックネームです。"),
+                error => onError?.Invoke($"登録に失敗しました: {error}"));
         }
 
         private static PlayerProfile Parse(string nickname, JObject doc)
@@ -66,7 +66,7 @@ namespace LiarsBatting.Network
             if (!string.IsNullOrEmpty(json))
             {
                 try { profile.Progress = JsonConvert.DeserializeObject<PlayerProgress>(json) ?? new PlayerProgress(); }
-                catch (Exception e) { Debug.LogWarning($"진행도 읽기 실패, 새로 시작합니다: {e.Message}"); }
+                catch (Exception e) { Debug.LogWarning($"進行状況の読み込みに失敗しました。新しく開始します: {e.Message}"); }
             }
             return profile;
         }
@@ -135,17 +135,17 @@ namespace LiarsBatting.Network
                 fields["lastSeen"] = FirestoreClient.IntField(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
                 var paths = new[] { "progress", "level", "title", "wins", "losses", "lastSeen" };
                 _db.PatchFields(PathOf(nickname), fields, paths,
-                    null, error => Debug.LogWarning($"진행도 저장 실패: {error}"));
+                    null, error => Debug.LogWarning($"進行状況の保存に失敗しました: {error}"));
 
                 onSettled?.Invoke(settlement);
-            }, error => Debug.LogWarning($"진행도 저장 실패(프로필 읽기): {error}"));
+            }, error => Debug.LogWarning($"進行状況の保存に失敗しました(プロフィール読み込み): {error}"));
         }
 
         public void Equip(string nickname, RewardInfo reward, Action onSaved, Action<string> onError)
         {
             WithCurrent(nickname, profile =>
             {
-                if (!profile.Progress.IsUnlocked(reward)) { onError?.Invoke("아직 잠겨 있습니다."); return; }
+                if (!profile.Progress.IsUnlocked(reward)) { onError?.Invoke("まだロックされています。"); return; }
                 var previous = profile.Progress.EquippedInSameSlot(reward);
                 profile.Progress.Equip(reward);
                 _db.PatchFields(PathOf(nickname), ProgressFields(profile), ProgressFieldPaths, onSaved, error =>
@@ -176,12 +176,12 @@ namespace LiarsBatting.Network
                     // The new document is the one that matters; a failed delete only leaves the
                     // old name reserved, so it is logged rather than reported as a failed rename.
                     _db.DeleteDocument(PathOf(oldName), null,
-                        error => Debug.LogWarning($"이전 닉네임 문서 삭제 실패: {error}"));
+                        error => Debug.LogWarning($"以前のニックネームドキュメントの削除に失敗しました: {error}"));
                     onRenamed?.Invoke();
                 },
-                () => onError?.Invoke("이미 사용 중인 닉네임입니다."),
-                error => onError?.Invoke($"변경에 실패했습니다: {error}"));
-            }, error => onError?.Invoke($"서버 연결에 실패했습니다: {error}"));
+                () => onError?.Invoke("すでに使用されているニックネームです。"),
+                error => onError?.Invoke($"変更に失敗しました: {error}"));
+            }, error => onError?.Invoke($"サーバーへの接続に失敗しました: {error}"));
         }
     }
 }

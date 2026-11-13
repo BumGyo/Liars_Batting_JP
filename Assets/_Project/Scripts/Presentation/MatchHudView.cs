@@ -46,13 +46,13 @@ namespace LiarsBatting.Presentation
         private readonly Text _elapsedLabel;
         private int _shownElapsed = -1;
 
-        // Whole seconds since the match started, as "경기 시간 mm:ss".
+        // Whole seconds since the match started, as "試合時間 mm:ss".
         public void SetElapsed(float seconds)
         {
             int s = Mathf.Max(0, Mathf.FloorToInt(seconds));
             if (s == _shownElapsed) return;
             _shownElapsed = s;
-            _elapsedLabel.text = $"경기 시간 {s / 60:00}:{s % 60:00}";
+            _elapsedLabel.text = $"試合時間 {s / 60:00}:{s % 60:00}";
         }
 
         public MatchHudView(Transform matchRoot, MonoBehaviour host)
@@ -72,11 +72,11 @@ namespace LiarsBatting.Presentation
 
             OpponentRevealed = new RevealedDigitsRow(Stage, 76, 106, 16);
             Place(OpponentRevealed.Root, 464, 16, 352, 106);
-            Label("상대의 밝혀진 숫자", 464, 124, 352, 18, 12, UITheme.Muted, TextAnchor.MiddleCenter);
+            Label("相手の公開された数字", 464, 124, 352, 18, 12, UITheme.Muted, TextAnchor.MiddleCenter);
 
             GuessSlotsHolder = NewRect("GuessSlots");
             Place(GuessSlotsHolder, 464, 256, 352, 106);
-            Label("제출할 숫자", 464, 366, 352, 18, 12, UITheme.Muted, TextAnchor.MiddleCenter);
+            Label("提出する数字", 464, 366, 352, 18, 12, UITheme.Muted, TextAnchor.MiddleCenter);
 
             // Total time this match has been running, just above the hourglass.
             _elapsedLabel = Label("", 50, 56, 184, 34, 18, new Color32(214, 160, 70, 255), TextAnchor.MiddleCenter, FontStyle.Bold);
@@ -91,18 +91,18 @@ namespace LiarsBatting.Presentation
             LieTokens = new LieTokenView(Stage);
             Place(LieTokens.Root, 262, 430, 170, 76);
 
-            Label("내 비밀번호", 440, 486, 116, 18, 12, UITheme.Muted, TextAnchor.MiddleRight);
+            Label("自分の暗証番号", 440, 486, 116, 18, 12, UITheme.Muted, TextAnchor.MiddleRight);
             MySecret = new RevealedDigitsRow(Stage, 30, 42, 8);
             Place(MySecret.Root, 562, 474, 156, 42);
             MyRevealed = new RevealedDigitsRow(Stage, 76, 106, 16);
             Place(MyRevealed.Root, 464, 524, 352, 106);
-            Label("공개된 내 숫자", 464, 632, 352, 18, 12, UITheme.Muted, TextAnchor.MiddleCenter);
+            Label("公開された自分の数字", 464, 632, 352, 18, 12, UITheme.Muted, TextAnchor.MiddleCenter);
 
             // Two small buttons above the tray; hover = full history pops up above them.
-            MyAttackHistory = new HistoryHoverView(Stage, "나의 추측 기록", "나의 추측 기록 (상대 응답)", host,
+            MyAttackHistory = new HistoryHoverView(Stage, "自分の推測履歴", "自分の推測履歴（相手の回答）", host,
                 popupAlignRight: false);
             Place(MyAttackHistory.Root, 888, 312, 176, 40);
-            OpponentAttackHistory = new HistoryHoverView(Stage, "상대의 추측 기록", "상대의 추측 기록 (내 판정)", host,
+            OpponentAttackHistory = new HistoryHoverView(Stage, "相手の推測履歴", "相手の推測履歴（自分の判定）", host,
                 popupAlignRight: true);
             Place(OpponentAttackHistory.Root, 1076, 312, 176, 40);
 
@@ -115,15 +115,15 @@ namespace LiarsBatting.Presentation
 
         public void ShowMySecret(int[] secret) => MySecret.ShowDigits(secret);
 
-        // Derives "내 턴" / "상대 턴" for the label under the hourglass from the header text.
+        // Derives "自分のターン" / "相手のターン" for the label under the hourglass from the header text.
         public void SetTurnLabel(string headerText)
         {
             string t = headerText ?? "";
-            string label = t.StartsWith("내 턴") ? "내 턴"
-                         : (t.StartsWith("상대 턴") || t.Contains("님의 턴")) ? "상대 턴"
+            string label = t.StartsWith("自分のターン") ? "自分のターン"
+                         : (t.StartsWith("相手のターン") || t.Contains("さんのターン")) ? "相手のターン"
                          : "";
             if (_turnLabel.text != label) _turnLabel.text = label;
-            _turnLabel.color = label == "내 턴" ? UITheme.Ink : UITheme.Muted;
+            _turnLabel.color = label == "自分のターン" ? UITheme.Ink : UITheme.Muted;
         }
 
         // Top-left based placement on the stage.

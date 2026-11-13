@@ -110,7 +110,7 @@ namespace LiarsBatting.Presentation
             while (remaining > 0f)
             {
                 int displayedSeconds = Mathf.CeilToInt(remaining);
-                _text.text = $"{displayedSeconds}<size=26>초</size>";
+                _text.text = $"{displayedSeconds}<size=26>秒</size>";
                 if (displayedSeconds <= 5 && displayedSeconds != lastTick)
                 {
                     lastTick = displayedSeconds;

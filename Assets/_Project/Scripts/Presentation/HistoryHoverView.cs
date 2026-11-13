@@ -5,7 +5,7 @@ using LiarsBatting.Core;
 
 namespace LiarsBatting.Presentation
 {
-    // A small iron-plate button ("나의 추측 기록 (3)"). Hovering it pops up the complete,
+    // A small iron-plate button ("自分の推測履歴 (3)"). Hovering it pops up the complete,
     // scrollable guess history above the button. Exposes the same AddRow / Clear calls the
     // old always-open ScrollingHistoryColumn had.
     public struct HistoryRecord
@@ -101,7 +101,7 @@ namespace LiarsBatting.Presentation
             RefreshLabel();
         }
 
-        // The last row was a lie that just got exposed (challenged successfully): show the "거짓" badge on it.
+        // The last row was a lie that just got exposed (challenged successfully): show the "嘘" badge on it.
         public void MarkLastRowAsLie()
         {
             if (_records.Count == 0) return;
@@ -113,7 +113,7 @@ namespace LiarsBatting.Presentation
             RebuildFull();
         }
 
-        // The last row's answer was proven true (a wrong accusation, or a successful truth check): show "진실".
+        // The last row's answer was proven true (a wrong accusation, or a successful truth check): show "真実".
         public void MarkLastRowAsTruth()
         {
             if (_records.Count == 0) return;

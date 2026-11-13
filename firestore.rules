@@ -2,7 +2,7 @@ rules_version = '2';
 
 // Firestore security rules for Liar's Batting.
 //
-// Apply in the Firebase console: Firestore Database > 규칙(Rules) tab > paste this file > 게시(Publish).
+// Apply in the Firebase console: Firestore Database > ルール(Rules) タブ > paste this file > 公開(Publish).
 //
 // The game has no sign-in, so these rules CANNOT tell who is writing. What they do:
 //   - only the five collections the game uses are reachable; everything else is denied

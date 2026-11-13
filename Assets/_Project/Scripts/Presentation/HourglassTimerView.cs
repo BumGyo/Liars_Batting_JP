@@ -89,7 +89,7 @@ namespace LiarsBatting.Presentation
             img.sprite = Resources.Load<Sprite>("Hud/" + spriteName);
             if (img.sprite == null)
             {
-                Debug.LogWarning("HourglassTimerView: 스프라이트를 찾을 수 없음 Resources/Hud/" + spriteName);
+                Debug.LogWarning("HourglassTimerView: スプライトが見つかりません Resources/Hud/" + spriteName);
                 img.color = Color.clear;
             }
             if (filled)

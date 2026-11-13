@@ -26,7 +26,7 @@ namespace LiarsBatting.Presentation
             Style(button, primary ? PrimaryText : UITheme.Ink);
         }
 
-        // ---------------- choice popups (진실대로 전송 / LIE TOKEN 사용 / 스트라이크·볼 ...) ----------------
+        // ---------------- choice popups (真実を送信 / LIE TOKEN使用 / ストライク・ボール ...) ----------------
         // semantic = the colour the caller used before: Accent = neutral, Clay = lie / decline,
         // StrikeFg = special (gold), BallFg = green label, OutFg = red label.
         public static void ApplyChoice(Button button, Color semantic)
@@ -88,7 +88,7 @@ namespace LiarsBatting.Presentation
         private static Sprite Load(string folder, string name)
         {
             var s = Resources.Load<Sprite>(folder + name);
-            if (s == null) Debug.LogWarning("MenuButtonStyle: 스프라이트를 찾을 수 없음 Resources/" + folder + name);
+            if (s == null) Debug.LogWarning("MenuButtonStyle: スプライトが見つかりません Resources/" + folder + name);
             return s;
         }
     }

@@ -10,7 +10,7 @@ namespace LiarsBatting.Presentation
     // ability button underneath. Hovering the PORTRAIT shows the ability's name and
     // description -- the button is only for using / reading about the ability, it is
     // not where the tooltip lives. The button's meaning depends on the hero (see
-    // GameBootstrap.RefreshMyAbilityUI): "능력 사용" for active abilities, "패시브 설명"
+    // GameBootstrap.RefreshMyAbilityUI): "能力使用" for active abilities, "パッシブ説明"
     // for passive ones. The opponent's badge has no button, and nothing about how
     // many charges THEY have left is ever shown (that stays hidden, like LIE TOKENs).
     public class HeroPortraitView
@@ -106,7 +106,7 @@ namespace LiarsBatting.Presentation
         public void SetHero(HeroId hero)
         {
             var info = HeroCatalog.Get(hero);
-            string kind = info.Charges > 0 ? "액티브" : "패시브";
+            string kind = info.Charges > 0 ? "アクティブ" : "パッシブ";
             _nameText.text = info.Name;
             _tooltipText.text = $"{info.AbilityName} ({kind})\n{info.AbilityDescription}";
             _portraitImage.sprite = Resources.Load<Sprite>($"Heroes/Hero_{hero}_Portrait");

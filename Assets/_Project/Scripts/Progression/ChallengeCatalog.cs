@@ -32,24 +32,24 @@ namespace LiarsBatting.Progression
 
         public static readonly ChallengeDef[] DailyPool =
         {
-            new ChallengeDef("d_play1", "게임 1판 완료하기", 1, s => 1),
-            new ChallengeDef("d_win1", "1승 하기", 1, s => s.Won ? 1 : 0),
-            new ChallengeDef("d_play2", "게임 2판 완료하기", 2, s => 1),
-            new ChallengeDef("d_lie3", "거짓말 3번 하기", 3, s => s.LiesTold),
-            new ChallengeDef("d_catch2", "의심으로 거짓말 2번 잡아내기", 2, s => s.ChallengesCorrect),
-            new ChallengeDef("d_human1", "사람과 1판 대전하기", 1, s => s.Online ? 1 : 0),
-            new ChallengeDef("d_ability3", "영웅 능력 3번 사용하기", 3, s => s.AbilityUses),
-            new ChallengeDef("d_believed2", "내 거짓말을 상대가 믿게 하기 2번", 2, s => s.LiesBelieved),
+            new ChallengeDef("d_play1", "ゲームを1試合完了する", 1, s => 1),
+            new ChallengeDef("d_win1", "1勝する", 1, s => s.Won ? 1 : 0),
+            new ChallengeDef("d_play2", "ゲームを2試合完了する", 2, s => 1),
+            new ChallengeDef("d_lie3", "嘘を3回つく", 3, s => s.LiesTold),
+            new ChallengeDef("d_catch2", "ダウトで嘘を2回見破る", 2, s => s.ChallengesCorrect),
+            new ChallengeDef("d_human1", "プレイヤーと1試合対戦する", 1, s => s.Online ? 1 : 0),
+            new ChallengeDef("d_ability3", "ヒーロー能力を3回使用する", 3, s => s.AbilityUses),
+            new ChallengeDef("d_believed2", "自分の嘘を相手に2回信じさせる", 2, s => s.LiesBelieved),
         };
 
         public static readonly ChallengeDef[] WeeklyPool =
         {
-            new ChallengeDef("w_play10", "게임 10판 완료하기", 10, s => 1),
-            new ChallengeDef("w_win5", "5승 하기", 5, s => s.Won ? 1 : 0),
-            new ChallengeDef("w_humanwin3", "사람 상대로 3승 하기", 3, s => s.Online && s.Won ? 1 : 0),
-            new ChallengeDef(DistinctHeroWinsId, "서로 다른 영웅 3명으로 승리하기", 3, null),
-            new ChallengeDef("w_catch10", "의심으로 거짓말 10번 잡아내기", 10, s => s.ChallengesCorrect),
-            new ChallengeDef("w_clean1", "내 숫자를 하나도 공개하지 않고 승리하기", 1, s => s.Won && s.MyDigitsRevealed == 0 ? 1 : 0),
+            new ChallengeDef("w_play10", "ゲームを10試合完了する", 10, s => 1),
+            new ChallengeDef("w_win5", "5勝する", 5, s => s.Won ? 1 : 0),
+            new ChallengeDef("w_humanwin3", "対人戦で3勝する", 3, s => s.Online && s.Won ? 1 : 0),
+            new ChallengeDef(DistinctHeroWinsId, "異なる3人のヒーローで勝利する", 3, null),
+            new ChallengeDef("w_catch10", "ダウトで嘘を10回見破る", 10, s => s.ChallengesCorrect),
+            new ChallengeDef("w_clean1", "自分の数字を1つも公開されずに勝利する", 1, s => s.Won && s.MyDigitsRevealed == 0 ? 1 : 0),
         };
 
         private static readonly TimeSpan Kst = TimeSpan.FromHours(9);

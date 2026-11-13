@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace LiarsBatting.Presentation
 {
     // Victory / defeat popup: a heavy black-leather ledger panel with a blind-embossed double border,
-    // a muted foil title ("승 리" in aged brass, "패 배" in dull red), a one-line verdict, the revealed
+    // a muted foil title ("勝利" in aged brass, "敗北" in dull red), a one-line verdict, the revealed
     // secret as cards, and a single button back to the main menu.
     //
     // Entrance (deliberately heavy, no glow or particles): the room dims, the panel sinks into place,
@@ -82,7 +82,7 @@ namespace LiarsBatting.Presentation
             }
             else
             {
-                Debug.LogWarning("ResultPopupView: Resources/Result/result_panel 을 찾을 수 없음");
+                Debug.LogWarning("ResultPopupView: Resources/Result/result_panel を見つけられません");
                 panelImage.color = UITheme.Bg;
             }
 
@@ -122,7 +122,7 @@ namespace LiarsBatting.Presentation
             UiFactory.SetHeight(buttonRow, 52);
             UiFactory.SetFlexible(buttonRow, 1, 0);
             _buttonGroup = buttonRow.gameObject.AddComponent<CanvasGroup>();
-            var button = UiFactory.Button(buttonRow, "메인 메뉴로", UITheme.Accent, Color.white,
+            var button = UiFactory.Button(buttonRow, "メインメニューへ", UITheme.Accent, Color.white,
                 () => onMainMenu?.Invoke(), 17);
             UiFactory.SetSize(button, 220, 48);
             MenuButtonStyle.ApplyChoice(button, UITheme.Accent);

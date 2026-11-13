@@ -64,7 +64,7 @@ namespace LiarsBatting.Presentation
         public void SetCountdown(float remaining)
         {
             _countdown.gameObject.SetActive(true);
-            _countdown.text = $"남은 시간 {Mathf.CeilToInt(remaining)}초";
+            _countdown.text = $"残り時間 {Mathf.CeilToInt(remaining)}秒";
             _countdown.color = remaining <= 5f ? UITheme.Clay : new Color32(214, 160, 70, 255);
         }
 
@@ -87,9 +87,9 @@ namespace LiarsBatting.Presentation
             row.anchoredPosition = new Vector2(-16, -12);
             row.sizeDelta = new Vector2(220, 32);
 
-            var mineButton = new HistoryPeekButton(row, "나의 기록", "나의 추측 기록 (상대 응답)", mine, host);
+            var mineButton = new HistoryPeekButton(row, "自分の履歴", "自分の推測履歴（相手の回答）", mine, host);
             UiFactory.SetSize(mineButton.Root, 104, 32);
-            var opponentButton = new HistoryPeekButton(row, "상대 기록", "상대의 추측 기록 (내 판정)", opponent, host);
+            var opponentButton = new HistoryPeekButton(row, "相手の履歴", "相手の推測履歴（自分の判定）", opponent, host);
             UiFactory.SetSize(opponentButton.Root, 104, 32);
         }
 

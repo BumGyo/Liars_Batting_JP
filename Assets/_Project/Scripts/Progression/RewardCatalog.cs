@@ -36,23 +36,23 @@ namespace LiarsBatting.Progression
         // Player-level rewards, in level order. Edit names/levels/tints here.
         public static readonly RewardInfo[] Player =
         {
-            new RewardInfo(NoTitle, RewardKind.Title, "칭호 없음", 1),
-            new RewardInfo(NoFrame, RewardKind.Frame, "기본 테두리", 1, "D6A046"),
-            new RewardInfo(DefaultBackground, RewardKind.Background, "기본 지하실", 1, "FFFFFF"),
-            new RewardInfo(DefaultCards, RewardKind.CardSkin, "기본 카드", 1, "FFFFFF"),
+            new RewardInfo(NoTitle, RewardKind.Title, "称号なし", 1),
+            new RewardInfo(NoFrame, RewardKind.Frame, "デフォルトフレーム", 1, "D6A046"),
+            new RewardInfo(DefaultBackground, RewardKind.Background, "デフォルト地下室", 1, "FFFFFF"),
+            new RewardInfo(DefaultCards, RewardKind.CardSkin, "デフォルトカード", 1, "FFFFFF"),
 
-            new RewardInfo("title_rookie", RewardKind.Title, "초보 거짓말쟁이", 2),
-            new RewardInfo("frame_bronze", RewardKind.Frame, "청동 테두리", 3, "B07A45"),
-            new RewardInfo("bg_crimson", RewardKind.Background, "진홍 도박장", 5, "FFB4AA"),
-            new RewardInfo("card_ebony", RewardKind.CardSkin, "흑단 카드", 7, "B9B2C4"),
-            new RewardInfo("title_pokerface", RewardKind.Title, "포커페이스", 10),
-            new RewardInfo("frame_silver", RewardKind.Frame, "은 테두리", 10, "D3D7DE"),
-            new RewardInfo("bg_teal", RewardKind.Background, "심야 청록", 15, "A6E0DC"),
-            new RewardInfo("card_gold", RewardKind.CardSkin, "황금 카드", 20, "FFE08A"),
-            new RewardInfo("title_tazza", RewardKind.Title, "타짜", 20),
-            new RewardInfo("frame_gold", RewardKind.Frame, "금 테두리", 25, "F2C94C"),
-            new RewardInfo("title_legend", RewardKind.Title, "전설의 허풍선이", 30),
-            new RewardInfo("bg_vip", RewardKind.Background, "황금 VIP룸", 30, "FFE2A8"),
+            new RewardInfo("title_rookie", RewardKind.Title, "初心者の嘘つき", 2),
+            new RewardInfo("frame_bronze", RewardKind.Frame, "ブロンズフレーム", 3, "B07A45"),
+            new RewardInfo("bg_crimson", RewardKind.Background, "深紅のカジノ", 5, "FFB4AA"),
+            new RewardInfo("card_ebony", RewardKind.CardSkin, "エボニーカード", 7, "B9B2C4"),
+            new RewardInfo("title_pokerface", RewardKind.Title, "ポーカーフェイス", 10),
+            new RewardInfo("frame_silver", RewardKind.Frame, "シルバーフレーム", 10, "D3D7DE"),
+            new RewardInfo("bg_teal", RewardKind.Background, "深夜のティール", 15, "A6E0DC"),
+            new RewardInfo("card_gold", RewardKind.CardSkin, "黄金のカード", 20, "FFE08A"),
+            new RewardInfo("title_tazza", RewardKind.Title, "勝負師", 20),
+            new RewardInfo("frame_gold", RewardKind.Frame, "ゴールドフレーム", 25, "F2C94C"),
+            new RewardInfo("title_legend", RewardKind.Title, "伝説の大ぼら吹き", 30),
+            new RewardInfo("bg_vip", RewardKind.Background, "黄金のVIPルーム", 30, "FFE2A8"),
         };
 
         // ---- hero mastery rewards (same shape for every hero) ----
@@ -65,13 +65,13 @@ namespace LiarsBatting.Progression
         private static readonly Dictionary<HeroId, (string first, string master)> HeroTitles =
             new Dictionary<HeroId, (string, string)>
             {
-                { HeroId.Hunter, ("사냥꾼의 혀", "거짓말 사냥의 대가") },
-                { HeroId.Paladin, ("꺾이지 않는 신념", "불굴의 성기사") },
-                { HeroId.Rogue, ("진실을 보는 눈", "거짓의 천적") },
-                { HeroId.Priest, ("집요한 심문관", "한 자리의 달인") },
-                { HeroId.DemonHunter, ("봉인자", "사슬의 지배자") },
-                { HeroId.Warrior, ("멈추지 않는 돌격", "연속 돌격의 화신") },
-                { HeroId.Wizard, ("꿰뚫는 시선", "천리안의 현자") },
+                { HeroId.Hunter, ("狩人の舌", "嘘狩りの大家") },
+                { HeroId.Paladin, ("不屈の信念", "不屈の聖騎士") },
+                { HeroId.Rogue, ("真実を見通す瞳", "嘘の天敵") },
+                { HeroId.Priest, ("執拗な審問官", "一桁の達人") },
+                { HeroId.DemonHunter, ("封印者", "鎖の支配者") },
+                { HeroId.Warrior, ("止まらぬ突撃", "連続突撃の化身") },
+                { HeroId.Wizard, ("見抜く視線", "千里眼の賢者") },
             };
 
         public static string SkinId(HeroId hero, int n) => $"{hero}_skin{n}";
@@ -86,13 +86,13 @@ namespace LiarsBatting.Progression
             {
                 var h = info.Id;
                 var titles = HeroTitles[h];
-                list.Add(new RewardInfo(SkinId(h, 0), RewardKind.HeroSkin, "기본 초상화", 1, "FFFFFF", h));
-                list.Add(new RewardInfo(EffectId(h, false), RewardKind.HeroEffect, "효과 없음", 1, null, h));
+                list.Add(new RewardInfo(SkinId(h, 0), RewardKind.HeroSkin, "デフォルト肖像画", 1, "FFFFFF", h));
+                list.Add(new RewardInfo(EffectId(h, false), RewardKind.HeroEffect, "エフェクトなし", 1, null, h));
                 list.Add(new RewardInfo($"{h}_title1", RewardKind.Title, titles.first, HeroTitleLevel, null, h));
-                list.Add(new RewardInfo(SkinId(h, 1), RewardKind.HeroSkin, "고급 초상화", HeroSkin1Level, "FFF4E2", h));
-                list.Add(new RewardInfo(EffectId(h, true), RewardKind.HeroEffect, "움직이는 초상화", HeroEffectLevel, null, h));
+                list.Add(new RewardInfo(SkinId(h, 1), RewardKind.HeroSkin, "高級肖像画", HeroSkin1Level, "FFF4E2", h));
+                list.Add(new RewardInfo(EffectId(h, true), RewardKind.HeroEffect, "アニメーション肖像画", HeroEffectLevel, null, h));
                 list.Add(new RewardInfo($"{h}_title2", RewardKind.Title, titles.master, HeroMasterLevel, null, h));
-                list.Add(new RewardInfo(SkinId(h, 2), RewardKind.HeroSkin, "황금 초상화", HeroMasterLevel, "FFE27A", h));
+                list.Add(new RewardInfo(SkinId(h, 2), RewardKind.HeroSkin, "黄金の肖像画", HeroMasterLevel, "FFE27A", h));
             }
             return list.ToArray();
         }
@@ -100,10 +100,10 @@ namespace LiarsBatting.Progression
         public static RewardInfo Find(string id) =>
             Array.Find(Player, r => r.Id == id) ?? Array.Find(Hero, r => r.Id == id);
 
-        // Player-level rewards of one kind (the 꾸미기 tab).
+        // Player-level rewards of one kind (the カスタマイズ tab).
         public static List<RewardInfo> OfKind(RewardKind kind) => new List<RewardInfo>(Array.FindAll(Player, r => r.Kind == kind));
 
-        // One hero's rewards of one kind (the 영웅 숙련도 tab).
+        // One hero's rewards of one kind (the ヒーロー熟練度 tab).
         public static List<RewardInfo> ForHero(HeroId hero, RewardKind kind) =>
             new List<RewardInfo>(Array.FindAll(Hero, r => r.Hero == hero && r.Kind == kind));
 

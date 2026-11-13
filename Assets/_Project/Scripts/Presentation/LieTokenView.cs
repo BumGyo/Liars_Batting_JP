@@ -18,7 +18,7 @@ namespace LiarsBatting.Presentation
             _full = Resources.Load<Sprite>("Hud/lie_token_coin");
             _used = Resources.Load<Sprite>("Hud/lie_token_coin_used");
             if (_full == null || _used == null)
-                Debug.LogWarning("LieTokenView: Resources/Hud/lie_token_coin(.png / _used.png)를 찾을 수 없음");
+                Debug.LogWarning("LieTokenView: Resources/Hud/lie_token_coin(.png / _used.png)が見つかりません");
 
             Root = UiFactory.VerticalGroup(parent, "LieTokens", spacing: 4, childAlign: TextAnchor.UpperCenter);
             var label = UiFactory.Text(Root, "LIE TOKEN", 11, UITheme.Muted, TextAnchor.MiddleCenter, FontStyle.Bold);

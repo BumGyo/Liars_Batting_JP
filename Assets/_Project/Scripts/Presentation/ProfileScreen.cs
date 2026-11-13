@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 namespace LiarsBatting.Presentation
 {
-    // The 프로필 screen, in tabs:
-    //   프로필   - my picture (a hero portrait), nickname, title, level bar, record against people,
+    // The プロフィール screen, in tabs:
+    //   プロフィール - my picture (a hero portrait), nickname, title, level bar, record against people,
     //              portrait picker and nickname change
-    //   도전과제 - today's and this week's challenges with progress
-    //   꾸미기   - equip unlocked titles, portrait frames, background skins and card skins
+    //   チャレンジ   - today's and this week's challenges with progress
+    //   カスタマイズ - equip unlocked titles, portrait frames, background skins and card skins
     // Pure view: GameBootstrap does the saving through ProfileStore and reports back.
     public class ProfileScreen
     {
@@ -118,14 +118,14 @@ namespace LiarsBatting.Presentation
             // ---- tab row ----
             var tabRow = UiFactory.HorizontalGroup(layout, "Tabs", spacing: 10, childAlign: TextAnchor.MiddleLeft);
             FixedHeight(tabRow, 44);
-            AddTab(tabRow, "프로필", 0);
-            AddTab(tabRow, "도전과제", 1);
-            AddTab(tabRow, "꾸미기", 2);
-            AddTab(tabRow, "영웅 숙련도", 3);
+            AddTab(tabRow, "プロフィール", 0);
+            AddTab(tabRow, "ミッション", 1);
+            AddTab(tabRow, "カスタマイズ", 2);
+            AddTab(tabRow, "ヒーロー熟練度", 3);
             var tabSpacer = new GameObject("Spacer", typeof(RectTransform), typeof(LayoutElement));
             tabSpacer.transform.SetParent(tabRow, false);
             tabSpacer.GetComponent<LayoutElement>().flexibleWidth = 1;
-            var back = UiFactory.Button(tabRow, "메인 메뉴로", UITheme.Surface2, UITheme.Ink, () => OnBack?.Invoke(), 15);
+            var back = UiFactory.Button(tabRow, "メインメニューへ", UITheme.Surface2, UITheme.Ink, () => OnBack?.Invoke(), 15);
             UiFactory.SetSize(back, 160, 44);
             MenuButtonStyle.Apply(back, primary: false);
 
@@ -133,7 +133,7 @@ namespace LiarsBatting.Presentation
             pageHost.transform.SetParent(layout, false);
             pageHost.GetComponent<LayoutElement>().flexibleHeight = 1;
 
-            // ================= 프로필 =================
+            // ================= プロフィール =================
             var profilePage = NewPage(pageHost.transform, "ProfilePage");
             var columns = UiFactory.HorizontalGroup(profilePage, "Columns", spacing: 40, childAlign: TextAnchor.UpperLeft);
             UiFactory.StretchToFillParent(columns);
@@ -172,7 +172,7 @@ namespace LiarsBatting.Presentation
 
             var divider = UiFactory.Panel(left, "Divider", UITheme.Border);
             UiFactory.SetHeight(divider, 1);
-            var recordLabel = UiFactory.Text(left, "사람 상대 전적", 13, UITheme.Muted, TextAnchor.MiddleCenter);
+            var recordLabel = UiFactory.Text(left, "対人戦績", 13, UITheme.Muted, TextAnchor.MiddleCenter);
             UiFactory.SetHeight(recordLabel, 18);
             _recordText = UiFactory.Text(left, "", 24, Brass, TextAnchor.MiddleCenter, FontStyle.Bold);
             UiFactory.SetHeight(_recordText, 32);
@@ -183,7 +183,7 @@ namespace LiarsBatting.Presentation
             var right = UiFactory.VerticalGroup(columns, "Settings", spacing: 10, childAlign: TextAnchor.UpperLeft);
             FillRemainingWidth(right);
 
-            AddLabel(right, "프로필 사진");
+            AddLabel(right, "プロフィール画像");
             var grid = UiFactory.Grid(right, "IconGrid", columns: 4, cellSize: 96, spacing: 10);
             var gridLayout = grid.GetComponent<GridLayoutGroup>();
             gridLayout.cellSize = new Vector2(96, 118);
@@ -191,19 +191,19 @@ namespace LiarsBatting.Presentation
             UiFactory.SetHeight(grid, 118 * 2 + 10);
             foreach (var info in HeroCatalog.All) BuildIconCell(grid, info);
 
-            AddLabel(right, "닉네임 변경 (최대 12자)");
+            AddLabel(right, "ニックネーム変更 (最大12文字)");
             var renameRow = UiFactory.HorizontalGroup(right, "RenameRow", spacing: 10);
             FixedHeight(renameRow, 48);
-            _renameInput = UiFactory.InputField(renameRow, "새 닉네임");
+            _renameInput = UiFactory.InputField(renameRow, "新しいニックネーム");
             _renameInput.GetComponent<Image>().color = Slot;
             var inputOutline = _renameInput.gameObject.AddComponent<Outline>();
             inputOutline.effectColor = UITheme.Border;
             inputOutline.effectDistance = new Vector2(1.5f, -1.5f);
             UiFactory.SetFlexible(_renameInput, 1, 0);
-            _renameButton = UiFactory.Button(renameRow, "변경", UITheme.Surface2, UITheme.Ink, () =>
+            _renameButton = UiFactory.Button(renameRow, "変更", UITheme.Surface2, UITheme.Ink, () =>
             {
                 string name = _renameInput.text.Trim();
-                if (name.Length == 0) { SetStatus("새 닉네임을 입력해주세요.", true); return; }
+                if (name.Length == 0) { SetStatus("新しいニックネームを入力してください。", true); return; }
                 OnRenameRequested?.Invoke(name);
             }, 15);
             UiFactory.SetSize(_renameButton, 110, 48);
@@ -213,7 +213,7 @@ namespace LiarsBatting.Presentation
             _statusText = UiFactory.Text(right, "", 13, UITheme.Muted, TextAnchor.MiddleLeft);
             UiFactory.SetHeight(_statusText, 20);
 
-            // ================= 도전과제 =================
+            // ================= ミッション =================
             var challengePage = NewPage(pageHost.transform, "ChallengePage");
             var challengeList = UiFactory.VerticalGroup(challengePage, "List", spacing: 8);
             UiFactory.StretchToFillParent(challengeList);
@@ -225,18 +225,18 @@ namespace LiarsBatting.Presentation
             _weeklyHeader = AddLabel(challengeList, "");
             for (int i = 0; i < ChallengeCatalog.WeeklyCount; i++) _weeklyRows.Add(BuildChallengeRow(challengeList));
 
-            // ================= 꾸미기 =================
+            // ================= カスタマイズ =================
             var cosmeticsPage = NewPage(pageHost.transform, "CosmeticsPage");
             var cosmeticsList = UiFactory.VerticalGroup(cosmeticsPage, "List", spacing: 8);
             UiFactory.StretchToFillParent(cosmeticsList);
-            BuildCosmeticSection(cosmeticsList, "칭호", RewardKind.Title);
-            BuildCosmeticSection(cosmeticsList, "초상화 테두리", RewardKind.Frame);
-            BuildCosmeticSection(cosmeticsList, "배경 스킨", RewardKind.Background);
-            BuildCosmeticSection(cosmeticsList, "카드 스킨", RewardKind.CardSkin);
+            BuildCosmeticSection(cosmeticsList, "称号", RewardKind.Title);
+            BuildCosmeticSection(cosmeticsList, "肖像画フレーム", RewardKind.Frame);
+            BuildCosmeticSection(cosmeticsList, "背景スキン", RewardKind.Background);
+            BuildCosmeticSection(cosmeticsList, "カードスキン", RewardKind.CardSkin);
             _cosmeticsStatus = UiFactory.Text(cosmeticsList, "", 13, UITheme.Muted, TextAnchor.MiddleLeft);
             UiFactory.SetHeight(_cosmeticsStatus, 20);
 
-            // ================= 영웅 숙련도 =================
+            // ================= ヒーロー熟練度 =================
             BuildHeroPage(NewPage(pageHost.transform, "HeroPage"));
 
             SelectTab(0);
@@ -424,14 +424,14 @@ namespace LiarsBatting.Presentation
             _heroXpText = UiFactory.Text(infoColumn, "", 12, UITheme.Muted, TextAnchor.MiddleLeft);
             UiFactory.SetHeight(_heroXpText, 16);
 
-            var challengeLabel = UiFactory.Text(detail, $"영웅 도전과제  ·  완료할 때마다 숙련도 +{LevelTable.HeroChallengeXp} XP",
+            var challengeLabel = UiFactory.Text(detail, $"ヒーローミッション  ·  達成ごとに熟練度 +{LevelTable.HeroChallengeXp} XP",
                 14, Brass, TextAnchor.MiddleLeft, FontStyle.Bold);
             UiFactory.SetHeight(challengeLabel, 22);
             for (int i = 0; i < HeroChallengeCatalog.PerHero; i++) _heroRows.Add(BuildChallengeRow(detail, 30, 14));
 
-            BuildHeroEquipRow(detail, "칭호", RewardKind.Title, 2);
-            BuildHeroEquipRow(detail, "초상화", RewardKind.HeroSkin, 3);
-            BuildHeroEquipRow(detail, "효과", RewardKind.HeroEffect, 2);
+            BuildHeroEquipRow(detail, "称号", RewardKind.Title, 2);
+            BuildHeroEquipRow(detail, "肖像画", RewardKind.HeroSkin, 3);
+            BuildHeroEquipRow(detail, "エフェクト", RewardKind.HeroEffect, 2);
         }
 
         private void BuildHeroEquipRow(Transform parent, string title, RewardKind kind, int count)
@@ -476,9 +476,9 @@ namespace LiarsBatting.Presentation
             _heroAbility.text = $"{info.AbilityName}  —  {info.AbilityDescription}";
             bool maxed = hp.Level >= LevelTable.MaxHeroLevel;
             int need = LevelTable.HeroXpToNext(hp.Level);
-            _heroLevel.text = $"숙련도 Lv.{hp.Level}";
+            _heroLevel.text = $"熟練度 Lv.{hp.Level}";
             _heroXpFill.anchorMax = new Vector2(maxed ? 1f : Mathf.Clamp01((float)hp.Xp / need), 1f);
-            _heroXpText.text = maxed ? "최고 숙련도" : $"{hp.Xp} / {need} XP";
+            _heroXpText.text = maxed ? "最高熟練度" : $"{hp.Xp} / {need} XP";
 
             FillRows(_heroRows, HeroChallengeCatalog.For(hero), hp.Challenges, hp.Done, LevelTable.HeroChallengeXp);
 
@@ -494,7 +494,7 @@ namespace LiarsBatting.Presentation
                     if (option.Reward == null) continue;
                     bool unlocked = p.IsUnlocked(option.Reward);
                     option.Button.interactable = unlocked;
-                    option.Label.text = unlocked ? option.Reward.Name : $"{option.Reward.Name}\nLv.{option.Reward.Level} 해금";
+                    option.Label.text = unlocked ? option.Reward.Name : $"{option.Reward.Name}\nLv.{option.Reward.Level} 解放";
                     SetSelected(option.Button, p.IsEquipped(option.Reward));
                 }
             }
@@ -533,7 +533,7 @@ namespace LiarsBatting.Presentation
             _levelText.text = "";
             _xpText.text = "";
             _recordText.text = "…";
-            _winRateText.text = "불러오는 중";
+            _winRateText.text = "読み込み中";
             _renameInput.text = "";
             SetStatus("", false);
             _cosmeticsStatus.text = "";
@@ -558,25 +558,25 @@ namespace LiarsBatting.Presentation
             int need = LevelTable.PlayerXpToNext(p.Level);
             _levelText.text = $"Lv.{p.Level}";
             _xpFill.anchorMax = new Vector2(maxed ? 1f : Mathf.Clamp01((float)p.Xp / need), 1f);
-            _xpText.text = maxed ? "최고 레벨" : $"{p.Xp} / {need} XP";
+            _xpText.text = maxed ? "最高レベル" : $"{p.Xp} / {need} XP";
 
             _recordText.text = profile.RecordText;
             _winRateText.text = profile.HumanGames == 0
-                ? "아직 사람과 대전한 기록이 없습니다"
-                : $"승률 {profile.WinRatePercent}% · 총 {profile.HumanGames}판";
+                ? "対人戦の記録がまだありません"
+                : $"勝率 {profile.WinRatePercent}% · 全 {profile.HumanGames}試合";
             SetSelectedIcon(profile.ProfileIcon);
 
             var now = DateTime.UtcNow;
-            _dailyHeader.text = $"일일 도전과제  ·  초기화까지 {FormatSpan(ChallengeCatalog.UntilDailyReset(now))}";
+            _dailyHeader.text = $"デイリーミッション  ·  リセットまで {FormatSpan(ChallengeCatalog.UntilDailyReset(now))}";
             FillRows(_dailyRows, ChallengeCatalog.DailyFor(p.DailyPeriod), p.Daily, p.DailyDone, LevelTable.DailyChallengeXp);
-            _weeklyHeader.text = $"주간 도전과제  ·  초기화까지 {FormatSpan(ChallengeCatalog.UntilWeeklyReset(now))}";
+            _weeklyHeader.text = $"ウィークリーミッション  ·  リセットまで {FormatSpan(ChallengeCatalog.UntilWeeklyReset(now))}";
             FillRows(_weeklyRows, ChallengeCatalog.WeeklyFor(p.WeeklyPeriod), p.Weekly, p.WeeklyDone, LevelTable.WeeklyChallengeXp);
 
             foreach (var option in _cosmetics)
             {
                 bool unlocked = p.IsUnlocked(option.Reward);
                 option.Button.interactable = unlocked;
-                option.Label.text = unlocked ? option.Reward.Name : $"{option.Reward.Name}\nLv.{option.Reward.Level} 해금";
+                option.Label.text = unlocked ? option.Reward.Name : $"{option.Reward.Name}\nLv.{option.Reward.Level} 解放";
                 SetSelected(option.Button, p.IsEquipped(option.Reward));
             }
 
@@ -599,7 +599,7 @@ namespace LiarsBatting.Presentation
                 progress.TryGetValue(def.Id, out int value);
                 row.Description.text = def.Text;
                 row.Description.color = complete ? UITheme.Muted : UITheme.Ink;
-                row.Progress.text = complete ? "완료" : $"{value} / {def.Target}";
+                row.Progress.text = complete ? "達成" : $"{value} / {def.Target}";
                 row.Progress.color = complete ? Brass : UITheme.Ink;
                 row.Reward.text = $"+{xp} XP";
             }
@@ -607,9 +607,9 @@ namespace LiarsBatting.Presentation
 
         private static string FormatSpan(TimeSpan span)
         {
-            if (span.TotalDays >= 1) return $"{(int)span.TotalDays}일 {span.Hours}시간";
-            if (span.TotalHours >= 1) return $"{(int)span.TotalHours}시간 {span.Minutes}분";
-            return $"{Math.Max(1, span.Minutes)}분";
+            if (span.TotalDays >= 1) return $"{(int)span.TotalDays}日 {span.Hours}時間";
+            if (span.TotalHours >= 1) return $"{(int)span.TotalHours}時間 {span.Minutes}分";
+            return $"{Math.Max(1, span.Minutes)}分";
         }
 
         public void SetSelectedIcon(HeroId hero)

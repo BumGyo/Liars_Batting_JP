@@ -115,7 +115,7 @@ namespace LiarsBatting.Presentation
             _scrollRect.verticalNormalizedPosition = 0f;
         }
 
-        // Builds one guess row (digits + strike/ball/out badges + optional "거짓" badge) under any parent.
+        // Builds one guess row (digits + strike/ball/out badges + optional "嘘" badge) under any parent.
         public static RectTransform BuildRow(Transform parent, int[] guess, JudgeResult reported, bool wasLie, bool revealLie = true, bool truthConfirmed = false)
         {
             var row = UiFactory.HorizontalGroup(parent, "Row", spacing: 6);
@@ -135,9 +135,9 @@ namespace LiarsBatting.Presentation
             }
 
             if (wasLie && revealLie)
-                UiFactory.Badge(row, "거짓", UITheme.ClaySoft, UITheme.Clay);
+                UiFactory.Badge(row, "嘘", UITheme.ClaySoft, UITheme.Clay);
             else if (truthConfirmed)
-                UiFactory.Badge(row, "진실", UITheme.BallBg, UITheme.BallFg);
+                UiFactory.Badge(row, "真実", UITheme.BallBg, UITheme.BallFg);
 
             return row;
         }

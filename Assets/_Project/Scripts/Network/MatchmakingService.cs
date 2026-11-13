@@ -188,7 +188,7 @@ namespace LiarsBatting.Network
             {
                 if (targetDoc == null)
                 {
-                    onError("존재하지 않는 닉네임입니다.");
+                    onError("存在しないニックネームです。");
                     return;
                 }
 
@@ -227,7 +227,7 @@ namespace LiarsBatting.Network
             if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() - _pendingInviteSentAt > InviteExpirySeconds)
             {
                 CancelFriendInvite();
-                onError("상대가 응답하지 않아 초대가 취소되었습니다.");
+                onError("相手が応答しなかったため、招待がキャンセルされました。");
                 return;
             }
 
@@ -324,7 +324,7 @@ namespace LiarsBatting.Network
             {
                 if (doc == null || FirestoreClient.ReadString(doc, "status", "") != "invited")
                 {
-                    onError("초대가 만료되었거나 취소되었습니다.");
+                    onError("招待の有効期限が切れたか、キャンセルされました。");
                     return;
                 }
                 WriteInviteResponse(fromNickname, matchId, true, onDone, onError);

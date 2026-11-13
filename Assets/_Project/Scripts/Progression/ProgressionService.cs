@@ -24,20 +24,20 @@ namespace LiarsBatting.Progression
         public string ToSummary()
         {
             var sb = new StringBuilder($"+{XpGained} XP");
-            if (LevelAfter > LevelBefore) sb.Append($"  ·  레벨 업! Lv.{LevelAfter}");
+            if (LevelAfter > LevelBefore) sb.Append($"  ·  レベルアップ！ Lv.{LevelAfter}");
 
             string heroName = HeroCatalog.Get(Hero)?.Name ?? Hero.ToString();
-            sb.Append($"\n{heroName} 숙련도 +{HeroXpGained} XP");
-            if (HeroLevelAfter > HeroLevelBefore) sb.Append($"  ·  숙련도 Lv.{HeroLevelAfter}!");
+            sb.Append($"\n{heroName} 熟練度 +{HeroXpGained} XP");
+            if (HeroLevelAfter > HeroLevelBefore) sb.Append($"  ·  熟練度 Lv.{HeroLevelAfter}!");
 
             var completed = new List<string>(Completed);
             completed.AddRange(HeroCompleted);
-            if (completed.Count > 0) sb.Append("\n완료: ").Append(string.Join(", ", completed));
+            if (completed.Count > 0) sb.Append("\n達成: ").Append(string.Join(", ", completed));
             if (NewRewards.Count > 0)
             {
                 var names = new List<string>();
                 foreach (var r in NewRewards) names.Add(r.Name);
-                sb.Append("\n새 보상: ").Append(string.Join(", ", names));
+                sb.Append("\n新規報酬: ").Append(string.Join(", ", names));
             }
             return sb.ToString();
         }

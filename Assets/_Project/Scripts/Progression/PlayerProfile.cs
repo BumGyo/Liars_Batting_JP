@@ -18,6 +18,6 @@ namespace LiarsBatting.Progression
 
         public int WinRatePercent => HumanGames == 0 ? 0 : (int)Math.Round(100.0 * Wins / HumanGames);
 
-        public string RecordText => $"{Wins}승 {Losses}패";
+        public string RecordText => $"{Wins}勝 {Losses}敗";
     }
 }
